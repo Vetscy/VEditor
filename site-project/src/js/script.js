@@ -1,0 +1,1 @@
+// Este arquivo contém o código JavaScript que pode ser utilizado para adicionar interatividade ao site.

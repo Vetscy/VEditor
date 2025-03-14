@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edição Profissional - Shorts, TikTok e YouTube</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">V Edições</div>
+        </nav>
+    </header>
+
+    <section id="hero">
+        <h1>Seja bem-vindo!</h1>
+        <p>Ayooo, seguinte!</p>
+        <p>Logo abaixo estão os preços de cada edição, então fiquem atentos! Inclusive, deixei uma surpresa: por mais que os preços já estejam listados, tem promoção rolando!</p>
+        <p>Se você entrar em contato comigo pelo X/Twitter, eu te explico melhor o motivo da promoção e te passo os valores com desconto. Em breve, essa promoção estará disponível no site para que você possa conferir diretamente</p>
+        <a href="https://x.com/V_historias" target="_blank" class="cta-button">
+            <i class="fas fa-comments"></i>
+            Contato
+        </a>
+    </section>
+
+    <section id="servicos">
+        <h2>Serviços</h2>
+        <div class="services-grid">
+            <div class="service-card" onclick="openModal('shorts-tiktok-modal')">
+                <i class="fab fa-tiktok"></i>
+                <h3>Shorts e TikTok</h3>
+                <p>Edições dinâmicas e tendências atuais para suas redes</p>
+            </div>
+            <div class="service-card" onclick="openModal('youtube-modal')">
+                <i class="fab fa-youtube"></i>
+                <h3>Videos Variados do Youtube</h3>
+                <p>Edição completa para vídeos longos no YouTube</p>
+            </div>
+            <div class="service-card" onclick="openModal('twitch-modal')">
+                <i class="fab fa-twitch"></i>
+                <h3>Cortes da Twitch</h3>
+                <p>Melhores momentos das suas lives em vídeos atrativos</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="shorts-tiktok-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('shorts-tiktok-modal')">&times;</span>
+            <div class="modal-body">
+                <div class="price-section alert-section">
+                    <div class="price-header">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h2>Observação Importante</h2>
+                    </div>
+                    <p>Se for um clipe de algum YouTuber específico, como vídeos do Cariani ou algo do tipo, não poderei editar. Só aceitarei edições se o vídeo for seu!</p>
+                    <p>Caso seja um corte de live do seu canal no YouTube ou na Twitch, aí sim posso editar.</p>
+                </div>
+
+                <div class="price-section">
+                    <div class="price-header">
+                        <i class="fab fa-tiktok"></i>
+                        <h2>Preços TikTok</h2>
+                    </div>
+                    <div class="price-option">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>Vídeo Curto (até 30s)</h3>
+                            <p>R$10</p>
+                        </div>
+                    </div>
+                    <div class="price-option">
+                        <i class="fas fa-magic"></i>
+                        <div>
+                            <h3>Legenda e jogo</h3>
+                            <p>R$25</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="price-section">
+                    <div class="price-header">
+                        <i class="fab fa-youtube"></i>
+                        <h2>Preços Shorts</h2>
+                    </div>
+                    <div class="price-option">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>Vídeo Curto (até 30s)</h3>
+                            <p>R$10</p>
+                        </div>
+                    </div>
+                    <div class="price-option">
+                        <i class="fas fa-gamepad"></i>
+                        <div>
+                            <h3>Gameplay/Lives com Efeitos</h3>
+                            <p>R$30</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal do YouTube -->
+    <div id="youtube-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('youtube-modal')">&times;</span>
+            <div class="modal-body">
+                <div class="price-section">
+                    <div class="price-header">
+                        <i class="fas fa-film"></i>
+                        <h2>Longplays</h2>
+                    </div>
+                    <div class="price-option">
+                        <i class="fas fa-hourglass"></i>
+                        <div>
+                            <h3>Edição Completa</h3>
+                            <p>R$50</p>
+                            <small>Edição detalhada que pode levar um dia inteiro. Descontos disponíveis dependendo do prazo!</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="price-section">
+                    <div class="price-header">
+                        <i class="fas fa-gamepad"></i>
+                        <h2>Gameplays (10-20 min)</h2>
+                    </div>
+                    <div class="price-option">
+                        <i class="fas fa-cut"></i>
+                        <div>
+                            <h3>Edição Dinâmica</h3>
+                            <p>R$30</p>
+                            <small>Inclui remoção de silêncio e adaptação para pausas monetizadas do YouTube</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="price-section alert-section">
+                    <div class="price-header">
+                        <i class="fas fa-video"></i>
+                        <h2>Vlogs</h2>
+                    </div>
+                    <p>No momento, vlogs serão um desafio para mim, pois ainda não tenho experiência com esse tipo de edição. Mas, em breve, pretendo aprender e aprimorar minhas habilidades para oferecer esse serviço também!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal da Twitch -->
+    <div id="twitch-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('twitch-modal')">&times;</span>
+            <div class="modal-body">
+                <div class="price-section">
+                    <div class="price-header">
+                        <i class="fas fa-bolt"></i>
+                        <h2>Cortes curtos</h2>
+                    </div>
+                    <div class="price-option">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h3>TikTok, Shorts, Reels (até 1 minuto)</h3>
+                            <p>R$15</p>
+                            <small>Edição dinâmica com zooms, legendas e efeitos para maior engajamento.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="price-section">
+                    <div class="price-header">
+                        <i class="fas fa-cut"></i>
+                        <h2>Cortes médios</h2>
+                    </div>
+                    <div class="price-option">
+                        <i class="fas fa-stopwatch"></i>
+                        <div>
+                            <h3>1 a 5 minutos</h3>
+                            <p>R$25</p>
+                            <small>Remoção de partes sem graça, cortes precisos e ajustes para manter o ritmo.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="price-section">
+                    <div class="price-header">
+                        <i class="fas fa-film"></i>
+                        <h2>Cortes longos</h2>
+                    </div>
+                    <div class="price-option">
+                        <i class="fas fa-hourglass"></i>
+                        <div>
+                            <h3>5 a 15 minutos</h3>
+                            <p>R$40</p>
+                            <small>Farei um trabalho mais detalhado, removendo silêncios e deixando o vídeo fluido e envolvente.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>V Edições</h3>
+                    <p>Transformando suas ideias em conteúdo de qualidade</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contato</h3>
+                    <div class="social-links">
+                        <a href="https://x.com/V_historias" target="_blank">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">Todos os direitos reservados &copy; 2025 V Edições</p>
+            </div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
