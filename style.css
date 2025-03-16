@@ -71,10 +71,11 @@ nav {
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    padding: 2rem 5%;
+    gap: 1.5rem; /* Ajustado para manter proporcionalidade */
+    padding: 1rem 5%; /* Reduzido de 2rem para 1rem */
     max-width: 1200px;
     margin: 0 auto;
+    margin-top: 1.5rem;
 }
 
 .service-card {
@@ -156,7 +157,7 @@ footer {
     transition: color 0.3s, transform 0.3s;
 }
 
-.social-links a:hover {
+social-links a:hover {
     color: var(--accent-color);
     transform: scale(1.1);
 }
@@ -424,4 +425,12 @@ copyright {
     .nav-links.active {
         display: flex;
     }
+}
+
+.services-spacing {
+    height: 1rem; /* Reduzido de 2rem para 1rem */
+}
+
+.services-container {
+    margin-top: 1rem; /* Reduzido de 2rem para 1rem */
 }
