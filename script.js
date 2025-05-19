@@ -3,6 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
 
+    // Configuração inicial dos vídeos
+    const videos = document.querySelectorAll('.video-container');
+    videos[0].setAttribute('data-type', 'longo');
+    videos[1].setAttribute('data-type', 'longo');
+    videos[2].setAttribute('data-type', 'curto');
+
     menuToggle.addEventListener('click', () => {
         navLinks.classList.toggle('active');
     });
@@ -65,3 +71,26 @@ window.addEventListener('click', (e) => {
         document.body.style.overflow = 'auto';
     }
 });
+
+// Função para filtrar vídeos
+function filterVideos(type) {
+    const videos = document.querySelectorAll('.video-container');
+    const buttons = document.querySelectorAll('.filter-button');
+
+    // Atualizar estado ativo dos botões
+    buttons.forEach(button => {
+        button.classList.remove('active');
+        if (button.getAttribute('onclick').includes(type)) {
+            button.classList.add('active');
+        }
+    });
+
+    // Mostrar/ocultar vídeos baseado no tipo
+    videos.forEach(video => {
+        if (type === 'todos' || video.getAttribute('data-type') === type) {
+            video.style.display = 'block';
+        } else {
+            video.style.display = 'none';
+        }
+    });
+}
