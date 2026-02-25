@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Capturar Frame do Vídeo</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #1a1123; color: #fff; }
+        #canvas { display: block; margin: 20px 0; border: 1px solid #666; max-width: 640px; }
+        button { padding: 10px 20px; background: #ff4be3; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
+        #status { margin-top: 20px; padding: 10px; background: #23153a; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Capturar Frame do Vídeo como Miniatura</h1>
+    <video id="video" src="demonstrações/demonstração.mp4" style="display:none;"></video>
+    <canvas id="canvas"></canvas>
+    <div>
+        <button onclick="captureFrame()">Capturar Frame (com Blur)</button>
+        <button onclick="downloadImage()">Download Miniatura</button>
+    </div>
+    <div id="status"></div>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const status = document.getElementById('status');
+
+        video.addEventListener('loadedmetadata', function() {
+            status.textContent = 'Vídeo carregado. Amplitude: ' + video.videoWidth + 'x' + video.videoHeight;
+        });
+
+        video.currentTime = 2; // Capturar frame aos 2 segundos
+
+        function captureFrame() {
+            canvas.width = 1280;
+            canvas.height = 720;
+
+            // Desenhar frame do vídeo
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Aplicar blur via Canvas
+            applyBlur(canvas, 15);
+
+            status.textContent = 'Frame capturado com blur!';
+        }
+
+        function applyBlur(canvas, radius) {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            const width = canvas.width;
+            const height = canvas.height;
+
+            for (let i = 0; i < width * height; i++) {
+                let r = 0, g = 0, b = 0, a = 0, count = 0;
+                const x = i % width;
+                const y = Math.floor(i / width);
+
+                for (let dx = -radius; dx <= radius; dx++) {
+                    for (let dy = -radius; dy <= radius; dy++) {
+                        const nx = Math.max(0, Math.min(width - 1, x + dx));
+                        const ny = Math.max(0, Math.min(height - 1, y + dy));
+                        const idx = (ny * width + nx) * 4;
+
+                        r += data[idx];
+                        g += data[idx + 1];
+                        b += data[idx + 2];
+                        a += data[idx + 3];
+                        count++;
+                    }
+                }
+
+                const idx = i * 4;
+                data[idx] = Math.round(r / count);
+                data[idx + 1] = Math.round(g / count);
+                data[idx + 2] = Math.round(b / count);
+                data[idx + 3] = Math.round(a / count);
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/jpeg', 0.9);
+            link.download = 'Miniatura.png';
+            link.click();
+            status.textContent = 'Imagem baixada como Miniatura.png!';
+        }
+
+        // Auto capture when video is ready
+        video.addEventListener('seeked', function() {
+            if (video.currentTime >= 2) {
+                captureFrame();
+                status.innerHTML += '<br><strong>Clique em "Download Miniatura" para salvar a imagem em image/Miniatura.png</strong>';
+            }
+        });
+    </script>
+</body>
+</html>

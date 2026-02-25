@@ -1,3 +1,115 @@
+/* Bottom Navigation Bar - Pequena, Flutuante e Transparente */
+.bottom-nav {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: 700px;
+    background: rgba(20, 10, 30, 0.85);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+    z-index: 100;
+    border-radius: 24px;
+    padding: 8px 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 48px;
+    border: 1px solid rgba(255, 75, 227, 0.1);
+}
+.bottom-nav-content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    gap: 32px;
+}
+.bottom-logo {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.v-logo {
+    color: #ff4be3;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+.edi-logo {
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.bottom-nav-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+}
+.bottom-nav-links li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 0.95rem;
+    transition: color .2s;
+    padding: 0;
+}
+.bottom-nav-links li a:hover {
+    color: #ff4be3;
+}
+.bottom-contact-btn {
+    background: #fff;
+    color: #000;
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 0;
+    box-shadow: none;
+    transition: background .2s, color .2s;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+.bottom-contact-btn:hover {
+    background: #ff4be3;
+    color: #fff;
+}
+@media (max-width: 900px) {
+    .bottom-nav {
+        max-width: calc(100vw - 30px);
+        padding: 6px 16px;
+        bottom: 12px;
+    }
+    .bottom-nav-content {
+        gap: 12px;
+    }
+    .bottom-nav-links {
+        gap: 12px;
+    }
+    .bottom-logo {
+        font-size: 0.9rem;
+    }
+    .bottom-nav-links li a {
+        font-size: 0.8rem;
+    }
+    .bottom-contact-btn {
+        padding: 5px 12px;
+        font-size: 0.75rem;
+    }
+}
 /* Estilos Globais */
 body {
     font-family: 'Montserrat', Arial, sans-serif;
@@ -72,7 +184,7 @@ header {
 .hero-section {
     text-align: center;
     padding: 64px 16px 32px 16px;
-    background: radial-gradient(ellipse at 30% 20%, #2a1740 0%, transparent 70%), #1a1123;
+    background: radial-gradient(ellipse at 30% 20%, rgba(42, 23, 64, 0.4) 0%, transparent 70%);
     position: relative;
 }
 .promo-banner {
@@ -183,6 +295,65 @@ header {
     font-weight: 700;
     margin-bottom: 24px;
 }
+
+/* Player de demonstração local */
+.demo-video-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 24px auto;
+    width: 100%;
+}
+.custom-player {
+    position: relative;
+    width: 900px;
+    max-width: 95vw;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.demo-video {
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    display: block;
+    background: #000;
+    aspect-ratio: 16 / 9;
+    border: none;
+}
+/* Hide Google Drive button with overlay */
+.custom-player::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 8;
+    border-radius: 0 12px 0 0;
+}
+.demo-video {
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    display: block;
+    background: #000;
+    aspect-ratio: 16 / 9;
+    border: none;
+}
+.progress {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #ff4be3 0%, #a259ff 100%);
+}
+.time {
+    color: #e6dff6;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+.volume { width: 90px; }
+.demo-video:-webkit-full-screen { max-height: none; }
+.demo-video:fullscreen { max-height: none; }
 
 /* Filtros de Vídeo */
 .video-filter {
@@ -401,6 +572,73 @@ header {
     color: #b7a7d9;
     font-size: 1.05rem;
     margin-top: 16px;
+}
+
+/* Contact Section */
+.contact-section {
+    text-align: center;
+    padding: 64px 16px 32px 16px;
+    background: #1a1123;
+}
+.contact-social-area {
+    color: #fff;
+}
+.contact-social-area h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.contact-social-area p {
+    font-size: 1.1rem;
+    color: #e0d6f7;
+    margin-bottom: 24px;
+}
+.contact-social-btns {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+.contact-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(18,9,26,0.85);
+    border: 2px solid #23153a;
+    border-radius: 18px;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 24px 32px 16px 32px;
+    min-width: 120px;
+    margin-bottom: 8px;
+    text-decoration: none;
+    transition: background .2s, color .2s, border .2s, box-shadow .2s;
+    box-shadow: 0 2px 16px #0003;
+}
+.contact-btn i {
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+}
+.contact-btn:hover {
+    background: #ff4be3;
+    color: #fff;
+    border-color: #ff4be3;
+    box-shadow: 0 4px 24px #ff4be355;
+}
+@media (max-width: 700px) {
+    .contact-social-btns {
+        gap: 12px;
+    }
+    .contact-btn {
+        padding: 18px 10px 10px 10px;
+        min-width: 90px;
+        font-size: 1rem;
+    }
+    .contact-btn i {
+        font-size: 1.5rem;
+    }
 }
 
 /* Footer */
@@ -783,6 +1021,48 @@ footer {
 
 .hidden {
     display: none !important;
+}
+
+/* Full-site animated background using fundoVedição.png */
+body::before {
+    content: "";
+    position: fixed;
+    left: -10%;
+    top: -10%;
+    width: 120%;
+    height: 120%;
+    background-image: url("image/fundoVedição.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.12;
+    filter: blur(8px) saturate(1.05);
+    transform: translate3d(0,0,0) scale(1.04);
+    z-index: 0;
+    pointer-events: none;
+    animation: site-wave 28s ease-in-out infinite;
+    will-change: transform, opacity;
+}
+
+@keyframes site-wave {
+    0% {
+        transform: translate3d(-6%, -3%, 0) scale(1.04) rotate(0deg);
+        opacity: 0.10;
+    }
+    50% {
+        transform: translate3d(6%, 3%, 0) scale(1.07) rotate(0.3deg);
+        opacity: 0.14;
+    }
+    100% {
+        transform: translate3d(-6%, -3%, 0) scale(1.04) rotate(0deg);
+        opacity: 0.10;
+    }
+}
+
+/* Ensure page content sits above the animated background */
+body > * {
+    position: relative;
+    z-index: 1;
 }
 
 @media (max-width: 900px) {

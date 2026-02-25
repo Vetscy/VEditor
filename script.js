@@ -58,6 +58,8 @@ function openModal(modalId) {
     document.body.style.overflow = 'hidden'; // Previne rolagem
 }
 
+// Nenhuma função customizada necessária para o iframe do Google Drive
+
 function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     modal.style.display = 'none';

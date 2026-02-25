@@ -4,113 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>V Edições</title>
+    <link rel="icon" href="Nova pasta/iconV.png" type="image/png">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Tela de Boas-Vindas -->
-    <div id="welcome-overlay" class="welcome-overlay">
-        <div class="welcome-content">
-            <div class="welcome-logo">V Edições</div>
-            <h2>Seja bem-vindo!</h2>
-            <p class="welcome-ayoo">Ayooo, seguinte!</p>
-            <p class="welcome-desc">
-                Logo abaixo estão os preços de cada edição, então fiquem atentos! Inclusive, deixei uma surpresa: <span class="welcome-promo">por mais que os preços já estejam listados, tem promoção rolando!</span>
-            </p>
-            <p class="welcome-desc">
-                Se você entrar em contato comigo pelo X/Twitter, eu te explico melhor o motivo da promoção e te passo os valores com desconto. Em breve, essa promoção estará disponível no site para que você possa conferir diretamente.
-            </p>
-            <div class="welcome-btns">
-                <button class="btn btn-primary" onclick="enterSite()">Acessar Site</button>
-                <a href="https://x.com/VetscyEditor" target="_blank" class="btn btn-secondary">Entrar em Contato</a>
-            </div>
-        </div>
-    </div>
-
-    <header>
-        <nav class="main-nav">
-            <div class="logo">V <span>Edições</span></div>
-            <ul class="nav-links">
-                <li><a href="#hero">Início</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#services">Serviços</a></li>
-                <li><a href="#prices">Preços</a></li>
-            </ul>
-            <a href="#contact" class="nav-contact-btn"><i class="fab fa-x-twitter"></i> Contato</a>
-        </nav>
-    </header>
+    <!-- Tela de Boas-Vindas removida -->
 
     <section id="hero" class="hero-section">
         <div class="promo-banner">
-            <i class="fas fa-star"></i> Promoção Limitada Ativa! <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i> Bem-vindo! <i class="fas fa-star"></i>
         </div>
-        <h1>Pronto Para Transformar<br><span class="highlight">Seu Conteúdo?</span></h1>
+        <h1>Ayooo!<br><span class="highlight">Seja bem-vindo!</span></h1>
         <p class="hero-desc">
-            Entre em contato agora e garanta sua edição com desconto especial. Não perca essa oportunidade única!
+            Meu nome é V e sou um editor de vídeo. Estou aqui procurando encontrar pessoas para editar vídeos. Espero que você fique interessado! Logo abaixo tem um vídeo de demonstração do meu trabalho. Por enquanto não editei para ninguém além de mim mesmo, mas tenho certeza que você vai se interessar!
         </p>
         <div class="hero-btns">
-            <a href="https://x.com/VetscyEditor" target="_blank" class="btn btn-primary">
-                <i class="fab fa-twitter"></i> Contatar no Twitter/X
+            <a href="#portfolio" class="btn btn-primary">
+                <i class="fas fa-play"></i> Ver Demonstração
             </a>
-            <a href="#portfolio" class="btn btn-secondary">Ver Mais Trabalhos</a>
-        </div>
-        <div class="hero-features">
-            <div class="feature-card"><i class="fas fa-bolt"></i> Entrega em 24-48h</div>
-            <div class="feature-card"><i class="fas fa-coins"></i> Preços promocionais</div>
-            <div class="feature-card"><i class="fas fa-bullseye"></i> Qualidade garantida</div>
-        </div>
-        <div class="promo-note">
-            * Promoção válida por tempo limitado. Entre em contato para garantir!
+            <a href="#services" class="btn btn-secondary">Conhecer Serviços</a>
         </div>
     </section>
 
     <section id="portfolio" class="portfolio-section">
         <h2>Demonstração do Meu Trabalho</h2>
-        <div class="video-carousel">
-            <button class="carousel-arrow left" onclick="prevVideo()" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
-            <div class="carousel-viewport">
-                <div class="video-card" id="video-card-0" style="display: flex;">
-                    <div class="video-thumb" onclick="openVideoModal('https://www.youtube.com/embed/OrqzAmoDYQU')">
-                        <img src="https://img.youtube.com/vi/OrqzAmoDYQU/hqdefault.jpg" alt="Thumb Minecraft" class="thumb-img" />
-                        <div class="thumb-blur"></div>
-                        <button class="play-btn"><i class="fas fa-play"></i></button>
-                    </div>
-                    <div class="video-meta">
-                        <span><i class="fas fa-clock"></i> 20:37</span>
-                        <span><i class="fas fa-eye"></i> 40</span>
-                    </div>
-                    <div class="video-title"><b>Uma Série! - Minecraft #1</b></div>
-                    <div class="video-desc">Uma Edição Basica De Gameplay Com Cortes E Etc.</div>
-                </div>
-                <div class="video-card" id="video-card-1" style="display: none;">
-                    <div class="video-thumb" onclick="openVideoModal('https://www.youtube.com/embed/ZTqCtayEO5A')">
-                        <img src="https://img.youtube.com/vi/ZTqCtayEO5A/hqdefault.jpg" alt="Thumb Jogando Com 2 Malucos" class="thumb-img" />
-                        <div class="thumb-blur"></div>
-                        <button class="play-btn"><i class="fas fa-play"></i></button>
-                    </div>
-                    <div class="video-meta">
-                        <span><i class="fas fa-clock"></i> 8:45</span>
-                        <span><i class="fas fa-eye"></i> 56</span>
-                    </div>
-                    <div class="video-title"><b>Jogando Com 2 Malucos</b></div>
-                    <div class="video-desc">Mesma coisa do anterior, mas agora com efeitos e transições.</div>
-                </div>
-                <div class="video-card" id="video-card-2" style="display: none;">
-                    <div class="video-thumb" onclick="openVideoModal('https://www.youtube.com/embed/Kc2TllJ4xaQ')">
-                        <img src="https://img.youtube.com/vi/Kc2TllJ4xaQ/hqdefault.jpg" alt="Thumb Quack.mp4 - R.E.P.O." class="thumb-img" />
-                        <div class="thumb-blur"></div>
-                        <button class="play-btn"><i class="fas fa-play"></i></button>
-                    </div>
-                    <div class="video-meta">
-                        <span><i class="fas fa-clock"></i> 0:31</span>
-                        <span><i class="fas fa-eye"></i> 68</span>
-                    </div>
-                    <div class="video-title"><b>Quack.mp4 - R.E.P.O.</b></div>
-                    <div class="video-desc">Shorts Curto Com Pequena Edição Com Efeitos e Textos</div>
-                </div>
+        <div class="demo-video-wrapper">
+            <div class="custom-player" id="custom-player">
+                <iframe id="drive-player" class="demo-video" src="https://drive.google.com/file/d/1dchdRKJol9FfRTTj5Wtp96ndXvAKNkgv/preview" allow="autoplay" title="Demonstração de trabalho"></iframe>
             </div>
-            <button class="carousel-arrow right" onclick="nextVideo()" aria-label="Próximo"><i class="fas fa-chevron-right"></i></button>
         </div>
     </section>
 
@@ -136,55 +59,15 @@
         </div>
     </section>
 
-    <section id="prices" class="prices-section">
-        <div class="prices-grid">
-            <div class="price-card">
-                <div class="price-icon"><i class="fas fa-bolt"></i></div>
-                <h3>Básico</h3>
-                <span class="price-type">Shorts & TikTok</span>
-                <div class="price-value">R$ 15 <span class="old-price">R$ 25</span></div>
-                <div class="price-save">Economize 10%</div>
-                <ul>
-                    <li><i class="fas fa-check"></i> Edição dinâmica para Shorts</li>
-                    <li><i class="fas fa-check"></i> Cortes precisos</li>
-                    <li><i class="fas fa-check"></i> Efeitos básicos</li>
-                    <li><i class="fas fa-check"></i> Música de fundo</li>
-                    <li><i class="fas fa-check"></i> Entrega em 24h</li>
-                </ul>
-                <a href="https://x.com/VetscyEditor" target="_blank" class="btn btn-black">Contratar Agora</a>
+    <section id="contact" class="contact-section">
+        <div class="contact-social-area">
+            <h3>Ficou interessado?</h3>
+            <p>Entre em contato por meio de uma das plataformas abaixo</p>
+            <div class="contact-social-btns">
+                <a href="https://discord.com/users/1401208144893444136" target="_blank" class="contact-btn" title="Discord"><i class="fab fa-discord"></i> Discord</a>
+                <a href="https://www.tiktok.com/@ayovetscy" target="_blank" class="contact-btn" title="TikTok"><i class="fab fa-tiktok"></i> TikTok</a>
+                <a href="https://x.com/VetscyEditor" target="_blank" class="contact-btn" title="Twitter/X"><i class="fab fa-twitter"></i> X</a>
             </div>
-            <div class="price-card popular">
-                <div class="price-icon"><i class="fas fa-star"></i></div>
-                <h3>Profissional</h3>
-                <span class="price-type">YouTube Completo</span>
-                <div class="price-value">R$ 35 <span class="old-price">R$ 50</span></div>
-                <div class="price-save">Economize 15%</div>
-                <ul>
-                    <li><i class="fas fa-check"></i> Edição completa de vídeos longos</li>
-                    <li><i class="fas fa-check"></i> Efeitos avançados</li>
-                    <li><i class="fas fa-check"></i> Correção de áudio(Op)</li>
-                    <li><i class="fas fa-check"></i> Legendas inclusas(Opcional)</li>
-                    <li><i class="fas fa-check"></i> Entrega em 48h</li>
-                </ul>
-                <a href="https://x.com/VetscyEditor" target="_blank" class="btn btn-primary">Contratar Agora</a>
-            </div>
-            <div class="price-card">
-                <div class="price-icon"><i class="fas fa-crown"></i></div>
-                <h3>Premium</h3>
-                <span class="price-type">Pacote Completo</span>
-                <div class="price-value">R$ 60 <span class="old-price">R$ 85</span></div>
-                <div class="price-save">Economize 25%</div>
-                <ul>
-                    <li><i class="fas fa-check"></i> Tudo dos planos anteriores</li>
-                    <li><i class="fas fa-check"></i> Cortes para Twitch</li>
-                    <li><i class="fas fa-check"></i> Entrega em 24h</li>
-                    <li><i class="fas fa-check"></i> Suporte prioritário</li>
-                </ul>
-                <a href="https://x.com/VetscyEditor" target="_blank" class="btn btn-black">Contratar Agora</a>
-            </div>
-        </div>
-        <div class="prices-note">
-            Entre em contato pelo Twitter/X para garantir sua promoção!
         </div>
     </section>
 
@@ -251,78 +134,28 @@
                     <h3>V <span>Edições</span></h3>
                     <p>Ayoo!, este site é para me ajudar com algumas coisas financeiras, comprar coisas para o meu PC e ajudar a melhorar um pouco mais um projeto que quero tentar montar. Então, espero que isso me ajude! Eu aguardo para poder editar os seus vídeos.
                     </p>
-                </div>
-                <div class="footer-section">
-                    <h3>Contato</h3>
-                    <div class="social-links">
-                        <a href="https://x.com/VetscyEditor" target="_blank">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                    </div>
-                </div>
+
             </div>
             <div class="footer-bottom">
-                <p class="copyright">Todos os direitos reservados &copy; 2025 V Edições</p>
+                <p class="copyright">Todos os direitos reservados &copy; 2026 V Edições</p>
             </div>
         </div>
     </footer>
 
-    <!-- Modal de vídeo global -->
-    <div id="video-modal" class="video-modal" style="display:none;">
-        <div class="video-modal-backdrop" onclick="closeVideoModal()"></div>
-        <div class="video-modal-content">
-            <span class="video-modal-close" onclick="closeVideoModal()">&times;</span>
-            <!-- Remova a classe 'hidden' do iframe para exibir o vídeo -->
-            <iframe id="video-modal-iframe" width="560" height="315" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <!-- Barra de navegação fixa no rodapé -->
+    <nav class="bottom-nav">
+        <div class="bottom-nav-content">
+            <div class="bottom-logo">
+                <span class="v-logo">V</span> <span class="edi-logo">Edições</span>
+            </div>
+            <ul class="bottom-nav-links">
+                <li><a href="#hero">Início</a></li>
+                <li><a href="#portfolio">Portfólio</a></li>
+                <li><a href="#services">Serviços</a></li>
+            </ul>
         </div>
-    </div>
+    </nav>
 
     <script src="script.js"></script>
-    <script>
-        // filepath: d:\Legau\VEditor-main\VEditor-main\index.html
-        function openVideoModal(url) {
-            var modal = document.getElementById('video-modal');
-            var iframe = document.getElementById('video-modal-iframe');
-            iframe.src = url + '?autoplay=1';
-            modal.style.display = 'flex';
-        }
-        function closeVideoModal() {
-            var modal = document.getElementById('video-modal');
-            var iframe = document.getElementById('video-modal-iframe');
-            iframe.src = '';
-            modal.style.display = 'none';
-        }
-
-        // Carousel logic
-        const totalVideos = 3;
-        let currentVideo = 0;
-        function showVideoCard(idx) {
-            for (let i = 0; i < totalVideos; i++) {
-                document.getElementById('video-card-' + i).style.display = (i === idx) ? 'flex' : 'none';
-            }
-        }
-        function prevVideo() {
-            currentVideo = (currentVideo - 1 + totalVideos) % totalVideos;
-            showVideoCard(currentVideo);
-        }
-        function nextVideo() {
-            currentVideo = (currentVideo + 1) % totalVideos;
-            showVideoCard(currentVideo);
-        }
-        // Inicializa o carrossel corretamente ao recarregar
-        showVideoCard(currentVideo);
-
-        // Tela de boas-vindas
-        function enterSite() {
-            document.getElementById('welcome-overlay').style.display = 'none';
-        }
-        // Opcional: impedir scroll enquanto tela de boas-vindas está ativa
-        document.body.style.overflow = 'hidden';
-        window.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('welcome-overlay').style.display = 'flex';
-            setTimeout(() => { document.body.style.overflow = ''; }, 100); // libera scroll ao fechar
-        });
-    </script>
 </body>
-</html>
 </html>
