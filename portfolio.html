@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio - V Edições</title>
+    <link rel="icon" href="Nova pasta/iconV.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navegação Flutuante -->
+    <nav class="floating-nav">
+        <div class="nav-content">
+            <a href="home.html" class="nav-logo" title="Voltar">
+                <img src="Nova pasta/iconV.png" alt="V Logo" class="logo-img">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#portfolio" title="Portfolio"><i class="fas fa-play"></i></a></li>
+                <li><a href="#services" title="Serviços"><i class="fas fa-video"></i></a></li>
+                <li><a href="#contact" title="Contato"><i class="fas fa-envelope"></i></a></li>
+            </ul>
+            <a href="#contact" class="nav-cta" title="Entre em Contato">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-video"></i> Portfólio de Edição
+            </div>
+            <h1>Ayooo!<br><span class="gradient-text">Bem-vindo ao canto de edição!</span></h1>
+            <p>Meu nome é V e sou um editor de vídeo especializado em conteúdo para redes sociais e plataformas de streaming. Aqui você encontrará exemplos do meu trabalho e estou pronto para transformar suas ideias em vídeos incríveis!</p>
+            <div class="hero-cta">
+                <a href="#portfolio" class="btn btn-gradient">
+                    <i class="fas fa-play"></i> Ver Demonstração
+                </a>
+                <a href="#contact" class="btn btn-outline">
+                    <i class="fas fa-envelope"></i> Contato
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="portfolio-section">
+        <h2>Demonstração do Meu Trabalho</h2>
+        <div class="demo-video-wrapper">
+            <div class="custom-player" id="custom-player">
+                <iframe id="drive-player" class="demo-video" src="https://drive.google.com/file/d/1dchdRKJol9FfRTTj5Wtp96ndXvAKNkgv/preview" allow="autoplay" title="Demonstração de trabalho"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services-section">
+        <h2>Serviços</h2>
+        <p class="services-desc">Transformo suas ideias em conteúdo visual impactante para todas as plataformas</p>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-music"></i></div>
+                <h3>Shorts e TikTok</h3>
+                <p>Edições dinâmicas e tendências atuais para suas redes</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-play-circle"></i></div>
+                <h3>Vídeos Variados do Youtube</h3>
+                <p>Edição completa para vídeos longos no YouTube</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fab fa-twitch"></i></div>
+                <h3>Cortes da Twitch</h3>
+                <p>Melhores momentos das suas lives em vídeos atrativos</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="contact-social-area">
+            <h3>Ficou interessado?</h3>
+            <p>Entre em contato por meio de uma das plataformas abaixo</p>
+            <div class="contact-social-btns">
+                <a href="https://discord.com/users/1401208144893444136" target="_blank" class="contact-btn" title="Discord"><i class="fab fa-discord"></i> Discord</a>
+                <a href="#" class="contact-btn disabled" title="TikTok - Em breve"><i class="fab fa-tiktok"></i> TikTok</a>
+                <!-- Para ativar o TikTok: remova a classe "disabled", mude href para "https://www.tiktok.com/@ayovetscy" e adicione target="_blank" -->
+                <a href="https://x.com/AyoV_Comms" target="_blank" class="contact-btn" title="Twitter/X"><i class="fab fa-twitter"></i> X</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
