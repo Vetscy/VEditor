@@ -34,6 +34,7 @@ body {
     overflow-x: hidden;
     user-select: none;
     -webkit-user-select: none;
+    zoom: 90%;
 }
 
 img {

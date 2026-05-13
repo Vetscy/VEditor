@@ -27,6 +27,7 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    zoom: 90%;
 }
 
 /* ===== FLOATING NAV ===== */
@@ -312,7 +313,60 @@ body {
     flex: 1;
     position: relative;
     height: 500px;
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.floating-character {
+    width: clamp(120%, 160%, 200%);
+    height: auto;
+    filter: drop-shadow(0 10px 30px rgba(157, 78, 221, 0.3));
+    transform: translateY(clamp(-15px, -30px, -40px));
+}
+
+@media (max-width: 1024px) {
+    .floating-character {
+        width: clamp(130%, 160%, 180%);
+        transform: translateY(-15px);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        padding: 60px 30px 100px;
+    }
+    
+    .hero-visual {
+        height: 400px;
+        margin-top: 40px;
+    }
+    
+    .floating-character {
+        width: 110%;
+        transform: translateY(-10px);
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-visual {
+        height: 300px;
+    }
+    
+    .floating-character {
+        width: 100%;
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-30px);
+    }
 }
 
 @keyframes slideInLeft {
