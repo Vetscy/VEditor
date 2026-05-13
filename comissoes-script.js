@@ -39,10 +39,26 @@ function detectarPaisEConverteMoedas() {
 function buscarPaisComAPI() {
     // Tentar múltiplas APIs confiáveis que funcionam com CORS
     const apis = [
-        'https://ipapi.co/json/',
-        'https://ip-api.com/json/',
-        'https://ipwhois.app/json/',
-        'https://geolocation-db.com/json/'
+        {
+            url: 'https://ipapi.co/json/',
+            parseCountry: (data) => data.country_code
+        },
+        {
+            url: 'https://ip-api.com/json/',
+            parseCountry: (data) => data.countryCode
+        },
+        {
+            url: 'https://ipwhois.app/json/',
+            parseCountry: (data) => data.country_code
+        },
+        {
+            url: 'https://geolocation-db.com/json/',
+            parseCountry: (data) => data.country_code
+        },
+        {
+            url: 'https://geoip.json-ip.com/api/json/ip/count',
+            parseCountry: (data) => data.countryCode
+        }
     ];
     
     const tentarAPI = (index = 0) => {
@@ -52,21 +68,31 @@ function buscarPaisComAPI() {
             return;
         }
         
+        const api = apis[index];
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 3000);
         
-        fetch(apis[index], { signal: controller.signal })
+        fetch(api.url, { signal: controller.signal })
             .then(response => response.json())
             .then(data => {
                 clearTimeout(timeoutId);
-                // Diferentes APIs retornam o código de país em campos diferentes
-                let pais = data.country_code || data.countryCode || data.country || 'BR';
-                console.log(`✅ Detectado via API: ${pais}`);
-                converterPrecos(pais);
+                console.log(`API ${index + 1} resposta:`, data);
+                
+                let pais = api.parseCountry(data);
+                if (!pais) {
+                    pais = data.country_code || data.countryCode || data.country || 'BR';
+                }
+                
+                if (pais && pais.length === 2) {
+                    console.log(`✅ Detectado via API ${index + 1}: ${pais}`);
+                    converterPrecos(pais);
+                } else {
+                    throw new Error('Código de país inválido');
+                }
             })
             .catch(error => {
                 clearTimeout(timeoutId);
-                console.log(`API ${index + 1} falhou, tentando próxima...`);
+                console.log(`API ${index + 1} falhou:`, error.message);
                 tentarAPI(index + 1);
             });
     };
@@ -76,6 +102,9 @@ function buscarPaisComAPI() {
 
 function converterPrecos(countryCode) {
     const precoBase = 150; // R$ 150,00 no Brasil
+    
+    // Normalizar código de país (remover espaços, maiúsculas)
+    const paisNormalizado = (countryCode || 'BR').trim().toUpperCase();
     
     // Taxas de conversão aproximadas (em relação ao Real)
     const conversoes = {
@@ -87,14 +116,14 @@ function converterPrecos(countryCode) {
         'AU': { simbolo: 'A$', taxa: 0.13, formato: (v) => `A$ ${v.toFixed(2)}` }, // ~1 AUD = 3.5 BRL
     };
     
-    const conversao = conversoes[countryCode] || conversoes['BR'];
+    const conversao = conversoes[paisNormalizado] || conversoes['BR'];
     const precoConvertido = precoBase * conversao.taxa;
     
-    console.log(`✅ Script ativo! País: ${countryCode} | Preço convertido: ${conversao.formato(precoConvertido)}`);
+    console.log(`✅ País detectado: ${paisNormalizado} | Moeda: ${conversao.simbolo} | Preço: ${conversao.formato(precoConvertido)}`);
     
     // Atualizar todos os preços no portfólio
     const elementos = document.querySelectorAll('.portfolio-price');
-    console.log(`Encontrados ${elementos.length} elementos com classe .portfolio-price`);
+    console.log(`Atualizando ${elementos.length} preços...`);
     
     elementos.forEach(elemento => {
         elemento.textContent = conversao.formato(precoConvertido);
