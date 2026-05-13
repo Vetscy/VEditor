@@ -29,15 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
         el.classList.add('fade-in');
         observer.observe(el);
     });
-
-    // Efeito parallax suave no hero
-    window.addEventListener('scroll', () => {
-        const hero = document.querySelector('.hero');
-        if (hero) {
-            const scrolled = window.pageYOffset;
-            hero.style.transform = `translateY(${scrolled * 0.4}px)`;
-        }
-    });
 });
 
 function detectarPaisEConverteMoedas() {
