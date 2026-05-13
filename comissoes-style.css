@@ -359,6 +359,13 @@ body {
     font-size: 0.9rem;
 }
 
+.portfolio-price {
+    padding: 0 20px 20px !important;
+    color: var(--design-accent) !important;
+    font-size: 1.2rem !important;
+    margin-top: 10px;
+}
+
 /* ===== SERVICES SECTION ===== */
 .services-section {
     padding: 100px 60px;
