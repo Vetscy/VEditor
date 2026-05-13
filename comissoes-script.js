@@ -32,41 +32,46 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function detectarPaisEConverteMoedas() {
-    // Usar geolocalização do navegador como fallback
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            position => {
-                // Se conseguir localizar, usar coordenadas (fallback Brasil)
-                converterPrecos('BR');
-            },
-            error => {
-                // Fallback: tentar com fetch
-                buscarPaisComAPI();
-            }
-        );
-    } else {
-        buscarPaisComAPI();
-    }
+    // Usar apenas APIs de IP, sem pedir permissão de localização
+    buscarPaisComAPI();
 }
 
 function buscarPaisComAPI() {
-    // Usar fetch com timeout curto
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000);
+    // Tentar múltiplas APIs confiáveis que funcionam com CORS
+    const apis = [
+        'https://ipapi.co/json/',
+        'https://ip-api.com/json/',
+        'https://ipwhois.app/json/',
+        'https://geolocation-db.com/json/'
+    ];
     
-    fetch('https://ipapi.co/json/', { signal: controller.signal })
-        .then(response => response.json())
-        .then(data => {
-            clearTimeout(timeoutId);
-            let pais = data.country_code || 'BR';
-            console.log('País detectado pela API:', pais);
-            converterPrecos(pais);
-        })
-        .catch(error => {
-            clearTimeout(timeoutId);
-            console.log('API indisponível, usando Brasil como padrão');
+    const tentarAPI = (index = 0) => {
+        if (index >= apis.length) {
+            console.log('Nenhuma API disponível, usando Brasil');
             converterPrecos('BR');
-        });
+            return;
+        }
+        
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
+        
+        fetch(apis[index], { signal: controller.signal })
+            .then(response => response.json())
+            .then(data => {
+                clearTimeout(timeoutId);
+                // Diferentes APIs retornam o código de país em campos diferentes
+                let pais = data.country_code || data.countryCode || data.country || 'BR';
+                console.log(`✅ Detectado via API: ${pais}`);
+                converterPrecos(pais);
+            })
+            .catch(error => {
+                clearTimeout(timeoutId);
+                console.log(`API ${index + 1} falhou, tentando próxima...`);
+                tentarAPI(index + 1);
+            });
+    };
+    
+    tentarAPI();
 }
 
 function converterPrecos(countryCode) {
