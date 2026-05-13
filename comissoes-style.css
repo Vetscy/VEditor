@@ -16,6 +16,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 html {
@@ -28,6 +32,15 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+img {
+    user-drag: none;
+    -webkit-user-drag: none;
+    pointer-events: none;
+    -webkit-touch-callout: none;
 }
 
 /* ===== FLOATING NAV ===== */

@@ -1,4 +1,45 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Bloquear clique direito em TUDO
+    document.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        return false;
+    });
+
+    // Bloquear F12, Ctrl+Shift+I, Ctrl+Shift+C, Ctrl+Shift+J, Ctrl+Shift+K, Ctrl+S
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'F12' || 
+            (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J' || e.key === 'K')) ||
+            (e.ctrlKey && e.key === 's')) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    // Bloquear seleção de texto
+    document.body.style.userSelect = 'none';
+    document.body.style.webkitUserSelect = 'none';
+    document.body.style.msUserSelect = 'none';
+
+    // Bloquear drag and drop de imagens
+    document.addEventListener('dragstart', (e) => {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    // Detectar DevTools aberto
+    setInterval(() => {
+        const start = performance.now();
+        debugger;
+        const end = performance.now();
+        if (end - start > 100) {
+            document.body.innerHTML = '';
+            alert('DevTools detectado! Acesso negado.');
+            window.location.href = 'about:blank';
+        }
+    }, 1000);
+
     // Detecção de país e conversão de moedas
     detectarPaisEConverteMoedas();
 
