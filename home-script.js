@@ -30,7 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Efeito parallax suave no hero
     window.addEventListener('scroll', () => {
         const hero = document.querySelector('.hero-section');
-        const scrolled = window.pageYOffset;
-        hero.style.transform = `translateY(${scrolled * 0.4}px)`;
+        if (hero) {
+            const scrolled = window.pageYOffset;
+            hero.style.transform = `translateY(${scrolled * 0.4}px)`;
+        }
     });
 });

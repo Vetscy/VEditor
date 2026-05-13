@@ -3,15 +3,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
 
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    }
+
     // Configuração inicial dos vídeos
     const videos = document.querySelectorAll('.video-container');
-    videos[0].setAttribute('data-type', 'longo');
-    videos[1].setAttribute('data-type', 'longo');
-    videos[2].setAttribute('data-type', 'curto');
-
-    menuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-    });
+    if (videos.length >= 3) {
+        videos[0].setAttribute('data-type', 'longo');
+        videos[1].setAttribute('data-type', 'longo');
+        videos[2].setAttribute('data-type', 'curto');
+    }
 
     // Remover código do botão Surpreenda-me
 
@@ -46,8 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Efeito de parallax suave no hero
     window.addEventListener('scroll', () => {
         const hero = document.querySelector('#hero');
-        const scrolled = window.pageYOffset;
-        hero.style.transform = `translateY(${scrolled * 0.4}px)`;
+        if (hero) {
+            const scrolled = window.pageYOffset;
+            hero.style.transform = `translateY(${scrolled * 0.4}px)`;
+        }
     });
 });
 
