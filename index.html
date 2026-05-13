@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V Edições</title>
+    <title>V - Edições e Comissões</title>
     <meta property="og:title" content="V - Edições e Comissões de Modelos">
     <meta property="og:description" content="Ayo, eu sou o V e seja bem-vindo ao meu site! Aqui você vai encontrar edição de vídeo e também comissão para modelos para figura!">
     <meta property="og:image" content="https://raw.githubusercontent.com/Vetscy/VEditor/main/image/ThumbanilSite.png">
-    <meta property="og:url" content="https://venditor.online">
+    <meta property="og:url" content="https://vetscy.github.io/VEditor/">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://raw.githubusercontent.com/Vetscy/VEditor/main/image/ThumbanilSite.png">
     <meta name="twitter:title" content="V - Edições e Comissões de Modelos">
     <meta name="twitter:description" content="Ayo, eu sou o V e seja bem-vindo ao meu site! Aqui você vai encontrar edição de vídeo e também comissão para modelos para figura!">
     <link rel="icon" href="Nova pasta/iconV.png" type="image/png">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="home-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="protect.js" defer></script>
     <style>
@@ -27,152 +27,143 @@
     </style>
 </head>
 <body>
-    <!-- Tela de Boas-Vindas removida -->
-
-    <section id="hero" class="hero-section">
-        <div class="promo-banner">
-            <i class="fas fa-star"></i> Bem-vindo! <i class="fas fa-star"></i>
-        </div>
-        <h1>Ayooo!<br><span class="highlight">Seja bem-vindo!</span></h1>
-        <p class="hero-desc">
-            Meu nome é V e sou um editor de vídeo. Estou aqui procurando encontrar pessoas para editar vídeos. Espero que você fique interessado! Logo abaixo tem um vídeo de demonstração do meu trabalho. Por enquanto não editei para ninguém além de mim mesmo, mas tenho certeza que você vai se interessar!
-        </p>
-        <div class="hero-btns">
-            <a href="#portfolio" class="btn btn-primary">
-                <i class="fas fa-play"></i> Ver Demonstração
+    <!-- Barra de Navegação Flutuante -->
+    <nav class="floating-nav">
+        <div class="nav-content">
+            <a href="index.html" class="nav-logo" title="Home">
+                <img src="Nova pasta/iconV.png" alt="V Logo" class="logo-img">
             </a>
-            <a href="#contact" class="btn btn-secondary">Contato</a>
-        </div>
-    </section>
-
-    <section id="portfolio" class="portfolio-section">
-        <h2>Demonstração do Meu Trabalho</h2>
-        <div class="demo-video-wrapper">
-            <div class="custom-player" id="custom-player">
-                <iframe id="drive-player" class="demo-video" src="https://drive.google.com/file/d/1dchdRKJol9FfRTTj5Wtp96ndXvAKNkgv/preview" allow="autoplay" title="Demonstração de trabalho"></iframe>
-            </div>
-        </div>
-    </section>
-
-    <section id="services" class="services-section">
-        <h2>Serviços</h2>
-        <p class="services-desc">Transformo suas ideias em conteúdo visual impactante para todas as plataformas</p>
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-music"></i></div>
-                <h3>Shorts e TikTok</h3>
-                <p>Edições dinâmicas e tendências atuais para suas redes</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="fas fa-play-circle"></i></div>
-                <h3>Vídeos Variados do Youtube</h3>
-                <p>Edição completa para vídeos longos no YouTube</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon"><i class="fab fa-twitch"></i></div>
-                <h3>Cortes da Twitch</h3>
-                <p>Melhores momentos das suas lives em vídeos atrativos</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="contact-section">
-        <div class="contact-social-area">
-            <h3>Ficou interessado?</h3>
-            <p>Entre em contato por meio de uma das plataformas abaixo</p>
-            <div class="contact-social-btns">
-                <a href="https://discord.com/users/1401208144893444136" target="_blank" class="contact-btn" title="Discord"><i class="fab fa-discord"></i> Discord</a>
-                <a href="#" class="contact-btn disabled" title="TikTok - Em breve"><i class="fab fa-tiktok"></i> TikTok</a>
-                <!-- Para ativar o TikTok: remova a classe "disabled", mude href para "https://www.tiktok.com/@ayovetscy" e adicione target="_blank" -->
-                <a href="https://x.com/AyoV_Comms" target="_blank" class="contact-btn" title="Twitter/X"><i class="fab fa-twitter"></i> X</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Seção de depoimentos desabilitada -->
-    <!--
-    <section id="testimonials">
-        <h2>O Que Dizem Nossos Clientes</h2>
-        <p>Depoimentos reais de criadores de conteúdo satisfeitos com nosso trabalho</p>
-        <div class="testimonials-grid">
-            <div class="testimonial-card">
-                <span class="testimonial-quote"><i class="fas fa-quote-left"></i></span>
-                <div class="testimonial-stars">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                </div>
-                <p class="testimonial-text">"V Edições transformou completamente meu canal! A qualidade das edições é incrível e os prazos são sempre cumpridos."</p>
-                <div class="testimonial-user">
-                    <span class="testimonial-avatar">JS</span>
-                    <div>
-                        <strong>João Silva</strong><br>
-                        <span>YouTuber</span>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-card">
-                <span class="testimonial-quote"><i class="fas fa-quote-left"></i></span>
-                <div class="testimonial-stars">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                </div>
-                <p class="testimonial-text">"Os cortes ficam perfeitos! Meus highlights nunca estiveram tão profissionais. Recomendo muito o trabalho!"</p>
-                <div class="testimonial-user">
-                    <span class="testimonial-avatar">MS</span>
-                    <div>
-                        <strong>Maria Santos</strong><br>
-                        <span>Streamer Twitch</span>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-card">
-                <span class="testimonial-quote"><i class="fas fa-quote-left"></i></span>
-                <div class="testimonial-stars">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                </div>
-                <p class="testimonial-text">"Trabalho de qualidade excepcional! V Edições entende exatamente o que eu preciso para meus conteúdos."</p>
-                <div class="testimonial-user">
-                    <span class="testimonial-avatar">PC</span>
-                    <div>
-                        <strong>Pedro Costa</strong><br>
-                        <span>Content Creator</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="testimonials-cta">
-            <p>Quer ser o próximo a ter resultados incríveis?</p>
-            <a href="#" class="cta-link">Junte-se aos nossos clientes satisfeitos!</a>
-        </div>
-    </section>
-    -->
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <h3>V <span>Edições</span></h3>
-                    <p>Ayoo!, este site é para me ajudar com algumas coisas financeiras, comprar coisas para o meu PC e ajudar a melhorar um pouco mais um projeto que quero tentar montar. Então, espero que isso me ajude! Eu aguardo para poder editar os seus vídeos.</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p class="copyright">Todos os direitos reservados &copy; 2026 V Edições</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Barra de navegação fixa no rodapé -->
-    <nav class="bottom-nav">
-        <div class="bottom-nav-content">
-            <div class="bottom-logo">
-                <span class="v-logo">V</span> <span class="edi-logo">Edições</span>
-            </div>
-            <ul class="bottom-nav-links">
-                <li><a href="#hero">Início</a></li>
-                <li><a href="#portfolio">Portfólio</a></li>
-                <li><a href="#services">Serviços</a></li>
+            <ul class="nav-links">
+                <li><a href="#services" title="Serviços"><i class="fas fa-briefcase"></i></a></li>
+                <li><a href="#cta" title="Explorar"><i class="fas fa-arrow-down"></i></a></li>
             </ul>
+            <a href="https://x.com/AyoV_Comms" target="_blank" class="nav-cta" title="Contato">
+                <i class="fas fa-envelope"></i>
+            </a>
         </div>
     </nav>
 
-    <script src="script.js"></script>
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">Ayoo, eu sou o V! ✨</span>
+            <h1><span class="gradient-text">Boas Vindas!</span></h1>
+            <p class="gradient-text">Aqui é meu portfólio e também você pode abrir comissão comigo, e eu faço edições de vídeos e modelos do mod figura do Minecraft.</p>
+            
+            <div class="hero-cards">
+                <div class="hero-card video-card">
+                    <div class="card-icon"><i class="fas fa-video"></i></div>
+                    <h3>Edição de Vídeos</h3>
+                    <p>Edição de vídeo divertida e como você preferir.</p>
+                </div>
+                <div class="hero-card design-card">
+                    <div class="card-icon"><i class="fas fa-palette"></i></div>
+                    <h3>Modelos Do Figura</h3>
+                    <p>Modelos para Minecraft utilizando figura</p>
+                </div>
+            </div>
+
+            <div class="hero-cta">
+                <a href="portfolio.html" class="btn btn-gradient">
+                    <i class="fas fa-play"></i> Ver Portfólio de Edição
+                </a>
+                <a href="comissoes.html" class="btn btn-outline">
+                    <i class="fas fa-star"></i> Comissões de Modelos
+                </a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="visual-orb orb-1"></div>
+            <div class="visual-orb orb-2"></div>
+        </div>
+    </section>
+
+    <!-- Services Showcase -->
+    <section id="services" class="services">
+        <div class="services-container">
+            <div class="section-header">
+                <h2>Meus Serviços</h2>
+                <p>Soluções profissionais para conteúdo visual</p>
+            </div>
+
+            <div class="services-showcase">
+                <!-- Vídeos -->
+                <div class="service-showcase">
+                    <div class="showcase-header">
+                        <div class="showcase-icon video-icon"><i class="fas fa-film"></i></div>
+                        <h3>Edição de Vídeos</h3>
+                    </div>
+                    <p class="showcase-desc">Faço a edição de vídeo básica, igualmente ao do meu canal, e caso você prefira de um jeito diferente, eu farei e mostrarei para você, tanto que tem revisões.</p>
+                    <ul class="showcase-list">
+                        <li><span class="badge">Shorts</span> TikTok e Instagram Reels</li>
+                        <li><span class="badge">YouTube</span> Vídeos longos e compilações</li>
+                        <li><span class="badge">Twitch</span> Cortes e highlights de lives</li>
+                    </ul>
+                    <a href="portfolio.html" class="service-link">Explorar <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <!-- Modelos -->
+                <div class="service-showcase">
+                    <div class="showcase-header">
+                        <div class="showcase-icon design-icon"><i class="fas fa-user-secret"></i></div>
+                        <h3>Modelo Do Mod Figura</h3>
+                    </div>
+                    <p class="showcase-desc">Eu faço os modelos do Mod. Figura e faço correções, o prazo de entrega sempre é no mesmo dia, ou pode demorar por causa da demanda.</p>
+                    <ul class="showcase-list">
+                        <li><span class="badge">Expressões</span> Faço rostinhos para seu personagem do Minecraft! </li>
+                        <li><span class="badge">Troca De Skin!</span>  Faço um sistema para trocar de skin como se fosse roupas!</li>
+                        <li><span class="badge">Acessórios!</span> Faço acessórios para seu personagem, como chapéus, armas, (Estou aprendendo)!</li>
+                    </ul>
+                    <a href="comissoes.html" class="service-link">Encomendar <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="cta">
+        <div class="cta-content">
+            <h2>Pronto para Começar?</h2>
+            <p>Escolha o serviço que mais te interessa e vamos criar algo incrível</p>
+            
+            <div class="cta-options">
+                <a href="portfolio.html" class="cta-option">
+                    <div class="option-icon"><i class="fas fa-play-circle"></i></div>
+                    <h3>Portfólio de Vídeos</h3>
+                    <p>Veja meus trabalhos de edição</p>
+                </a>
+                <a href="comissoes.html" class="cta-option">
+                    <div class="option-icon"><i class="fas fa-sparkles"></i></div>
+                    <h3>Solicitar Comissão</h3>
+                    <p>Crie seu personagem agora</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="contact-content">
+            <h2>Vamos Conversar?</h2>
+            <p>Entre em contato por uma das redes abaixo</p>
+            <div class="contact-links">
+                <a href="https://discord.com/users/1401208144893444136" target="_blank" class="contact-link">
+                    <i class="fab fa-discord"></i>
+                    <span>Discord</span>
+                </a>
+                <a href="#" class="contact-link disabled" title="TikTok - Em breve">
+                    <i class="fab fa-tiktok"></i>
+                    <span>TikTok</span>
+                </a>
+                <!-- Para ativar o TikTok: remova a classe "disabled", mude href para "https://www.tiktok.com/@ayovetscy" e adicione target="_blank" -->
+                <a href="https://x.com/AyoV_Comms" target="_blank" class="contact-link">
+                    <i class="fab fa-twitter"></i>
+                    <span>X / Twitter</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script src="home-script.js"></script>
 </body>
 </html>
