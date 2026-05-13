@@ -360,10 +360,11 @@ body {
 }
 
 .portfolio-price {
-    padding: 0 20px 20px !important;
-    color: var(--design-accent) !important;
-    font-size: 1.2rem !important;
+    padding: 0 20px 20px;
+    color: var(--design-accent);
+    font-size: 1.2rem;
     margin-top: 10px;
+    font-weight: 700;
 }
 
 /* ===== SERVICES SECTION ===== */
