@@ -158,8 +158,8 @@ function displayUserProfile(userData) {
             navAvatar.src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
         }
         if (navUsername) navUsername.innerText = userData.username || 'Usuário';
-        // Clique abre o perfil público do usuário
-        userProfileNav.onclick = () => window.location.href = `perfil.html?id=${userData.id}`;
+        // Clique abre o modal simplificado do perfil
+        userProfileNav.onclick = () => abrirMeuPerfil();
     }
 
     // Mostrar botão "Meu Perfil" no modal
