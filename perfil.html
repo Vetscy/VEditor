@@ -22,6 +22,1294 @@
             min-height: 100vh;
         }
 
+        .navbar {
+            background: rgba(10, 10, 10, 0.95);
+            border-bottom: 2px solid #9d4edd;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-back {
+            color: #c77dff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-back:hover {
+            gap: 15px;
+        }
+
+        .navbar-logo {
+            width: 40px;
+            height: 40px;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #7209b7 0%, #3a0ca3 100%);
+            padding: 60px 30px;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #c77dff;
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+        }
+
+        .profile-header-avatar {
+            width: 140px;
+            height: 140px;
+            min-width: 140px;
+            border-radius: 50%;
+            border: 4px solid #000;
+            object-fit: cover;
+            box-shadow: 0 0 30px rgba(199, 125, 255, 0.4);
+        }
+
+        .profile-header-info h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #000;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-header-info p {
+            color: #000;
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .profile-header-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-follow {
+            background: #9d4edd;
+            color: #fff;
+        }
+
+        .btn-follow:hover {
+            background: #c77dff;
+            transform: scale(1.05);
+        }
+
+        .btn-follow.following {
+            background: rgba(199, 125, 255, 0.3);
+            border: 2px solid #c77dff;
+            color: #c77dff;
+        }
+
+        .profile-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px 60px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #c77dff;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title i {
+            font-size: 32px;
+        }
+
+        .modelos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .modelo-card {
+            background: rgba(26, 10, 46, 0.6);
+            border: 1px solid #9d4edd;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .modelo-card:hover {
+            border-color: #c77dff;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(114, 9, 183, 0.3);
+        }
+
+        .modelo-image {
+            width: 100%;
+            height: 200px;
+            background: rgba(199, 125, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .modelo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modelo-info {
+            padding: 20px;
+        }
+
+        .modelo-title {
+            font-weight: 600;
+            color: #c77dff;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .modelo-author {
+            font-size: 12px;
+            color: #c0c0c0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .modelo-packages {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .package-badge {
+            background: rgba(199, 125, 255, 0.2);
+            color: #c77dff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .modelo-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #c0c0c0;
+            padding-top: 12px;
+            border-top: 1px solid rgba(199, 125, 255, 0.1);
+        }
+
+        .status-badge {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ff88;
+        }
+
+        .followers-section {
+            margin-top: 60px;
+            margin-bottom: 60px;
+        }
+
+        .followers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+        }
+
+        .follower-card {
+            background: rgba(114, 9, 183, 0.1);
+            border: 1px solid #9d4edd;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .follower-card:hover {
+            border-color: #c77dff;
+            background: rgba(114, 9, 183, 0.2);
+        }
+
+        .follower-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            border: 2px solid #9d4edd;
+            object-fit: cover;
+        }
+
+        .follower-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #c77dff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 30px;
+            color: #c0c0c0;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 18px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #c77dff;
+        }
+
+        .spinner {
+            border: 3px solid rgba(199, 125, 255, 0.2);
+            border-top: 3px solid #c77dff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .profile-header-info h1 {
+                font-size: 36px;
+            }
+
+            .modelos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile-header {
+                padding: 30px 15px;
+            }
+
+            .profile-header-avatar {
+                width: 100px;
+                height: 100px;
+            }
+
+            .profile-header-info h1 {
+                font-size: 28px;
+            }
+
+            .modelos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .followers-grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="home.html" class="navbar-back">
+            <i class="fas fa-arrow-left"></i>
+            <span>Voltar</span>
+        </a>
+        <img src="Nova pasta/iconV.png" alt="V Logo" class="navbar-logo">
+        <div style="width: 40px;"></div>
+    </nav>
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <img id="profile-avatar" class="profile-header-avatar" src="" alt="Avatar">
+        <div class="profile-header-info">
+            <h1 id="profile-name">Carregando...</h1>
+            <p id="profile-bio"></p>
+            <div class="profile-header-actions">
+                <button class="btn btn-follow" id="follow-btn" onclick="alternarSeguimento()" style="display: none;">
+                    <i class="fas fa-user-plus"></i>
+                    <span id="follow-text">Seguir</span>
+                </button>
+                <a href="https://x.com/AyoV_Comms" target="_blank" class="btn" style="background: #9d4edd; color: #fff;">
+                    <i class="fab fa-twitter"></i>
+                    Contato
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="profile-content">
+        <!-- Modelos Section -->
+        <section>
+            <div class="section-title">
+                <i class="fas fa-star"></i>
+                Seus Modelos
+            </div>
+            <div id="modelos-container" class="modelos-grid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Carregando modelos...
+                </div>
+            </div>
+        </section>
+
+        <!-- Followers Section -->
+        <section class="followers-section" id="followers-section" style="display: none;">
+            <div class="section-title">
+                <i class="fas fa-users"></i>
+                Seguidores
+            </div>
+            <div id="followers-container" class="followers-grid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Carregando seguidores...
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://knbloqfdvlioxxkxthif.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuYmxvcWZkdmxpb3h4a3h0aGlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNTIxNTMsImV4cCI6MjA5NDcyODE1M30.wDdPtUEBv8I00j0t-mlmdp3GDEcCZyRe1_BacNsQoCU';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let currentUserId = null;
+        let currentUserDiscordId = null;
+
+        window.addEventListener('load', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            currentUserId = urlParams.get('id');
+            
+            const userData = JSON.parse(localStorage.getItem('discord_user') || '{}');
+            currentUserDiscordId = userData.id;
+
+            console.log('Perfil do usuário:', currentUserId);
+            console.log('Usuário logado:', currentUserDiscordId);
+
+            if (currentUserId) {
+                carregarPerfilUsuario();
+                carregarModelos();
+                carregarSeguidores();
+                verificarFollowStatus();
+            }
+        });
+
+        async function carregarPerfilUsuario() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('perfis')
+                    .select('*')
+                    .eq('id_discord', currentUserId)
+                    .single();
+
+                if (error) throw error;
+
+                if (data) {
+                    document.getElementById('profile-name').textContent = data.username || 'Usuário';
+                    document.getElementById('profile-avatar').src = data.avatar_url || 'https://via.placeholder.com/140';
+                }
+            } catch (err) {
+                console.error('Erro ao carregar perfil:', err);
+            }
+        }
+
+        async function carregarModelos() {
+            try {
+                const { data: modelos, error } = await supabaseClient
+                    .from('produtos_usuarios')
+                    .select('*')
+                    .eq('id_usuario_discord', currentUserId);
+
+                if (error) throw error;
+
+                const container = document.getElementById('modelos-container');
+                container.innerHTML = '';
+
+                console.log('Modelos carregados:', modelos);
+
+                if (!modelos || modelos.length === 0) {
+                    container.innerHTML = `
+                        <div style="grid-column: 1 / -1;">
+                            <div class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                <p>Nenhum modelo disponível</p>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                modelos.forEach(modelo => {
+                    const card = document.createElement('div');
+                    card.className = 'modelo-card';
+                    card.innerHTML = `
+                        <div class="modelo-image">
+                            <img src="image/AvisoModelo.png" alt="${modelo.nome_produto}" onerror="this.src='https://via.placeholder.com/280x250'">
+                        </div>
+                        <div class="modelo-info">
+                            <div class="modelo-title">${modelo.nome_produto}</div>
+                            <div class="modelo-author">
+                                <i class="fas fa-user-circle"></i>
+                                ${modelo.descricao || 'Modelo'}
+                            </div>
+                            <div class="modelo-packages">
+                                <span class="package-badge"><i class="fas fa-check"></i> Completo</span>
+                            </div>
+                            <div class="modelo-status">
+                                <span class="status-badge"></span>
+                                Disponível
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                console.error('Erro ao carregar modelos:', err);
+                document.getElementById('modelos-container').innerHTML = `
+                    <div style="grid-column: 1 / -1;">
+                        <div class="empty-state">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p>Erro ao carregar modelos</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        async function carregarSeguidores() {
+            try {
+                const { data: followers, error } = await supabaseClient
+                    .from('followers')
+                    .select(`
+                        *,
+                        perfis:seguidor_id(id_discord, username, avatar_url)
+                    `)
+                    .eq('seguindo_id', currentUserId);
+
+                if (error) throw error;
+
+                const container = document.getElementById('followers-container');
+                const section = document.getElementById('followers-section');
+                container.innerHTML = '';
+
+                console.log('Seguidores carregados:', followers);
+
+                if (!followers || followers.length === 0) {
+                    section.style.display = 'none';
+                    return;
+                }
+
+                section.style.display = 'block';
+
+                followers.forEach(follow => {
+                    const perfil = follow.perfis;
+                    const card = document.createElement('div');
+                    card.className = 'follower-card';
+                    card.onclick = () => window.location.href = `perfil.html?id=${perfil.id_discord}`;
+                    card.innerHTML = `
+                        <img src="${perfil.avatar_url || 'https://via.placeholder.com/60'}" class="follower-avatar" alt="${perfil.username}">
+                        <div class="follower-name">${perfil.username}</div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                console.error('Erro ao carregar seguidores:', err);
+                document.getElementById('followers-section').style.display = 'none';
+            }
+        }
+
+        async function verificarFollowStatus() {
+            if (!currentUserDiscordId || currentUserDiscordId === currentUserId) {
+                document.getElementById('follow-btn').style.display = 'none';
+                return;
+            }
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('followers')
+                    .select('*')
+                    .eq('seguidor_id', currentUserDiscordId)
+                    .eq('seguindo_id', currentUserId)
+                    .single();
+
+                const btn = document.getElementById('follow-btn');
+                btn.style.display = 'block';
+
+                if (data) {
+                    btn.classList.add('following');
+                    btn.innerHTML = '<i class="fas fa-check"></i> Seguindo';
+                } else {
+                    btn.classList.remove('following');
+                    btn.innerHTML = '<i class="fas fa-user-plus"></i> Seguir';
+                }
+            } catch (err) {
+                document.getElementById('follow-btn').style.display = 'block';
+            }
+        }
+
+        async function alternarSeguimento() {
+            if (!currentUserDiscordId) {
+                alert('Faça login com Discord para seguir');
+                return;
+            }
+
+            if (currentUserDiscordId === currentUserId) {
+                alert('Você não pode seguir a si mesmo');
+                return;
+            }
+
+            try {
+                const { data: existing } = await supabaseClient
+                    .from('followers')
+                    .select('*')
+                    .eq('seguidor_id', currentUserDiscordId)
+                    .eq('seguindo_id', currentUserId)
+                    .single();
+
+                const btn = document.getElementById('follow-btn');
+
+                if (existing) {
+                    // Unfollow
+                    await supabaseClient
+                        .from('followers')
+                        .delete()
+                        .eq('seguidor_id', currentUserDiscordId)
+                        .eq('seguindo_id', currentUserId);
+
+                    btn.classList.remove('following');
+                    btn.innerHTML = '<i class="fas fa-user-plus"></i> Seguir';
+                } else {
+                    // Follow
+                    await supabaseClient
+                        .from('followers')
+                        .insert({
+                            seguidor_id: currentUserDiscordId,
+                            seguindo_id: currentUserId
+                        });
+
+                    btn.classList.add('following');
+                    btn.innerHTML = '<i class="fas fa-check"></i> Seguindo';
+                }
+
+                // Recarregar seguidores
+                await carregarSeguidores();
+            } catch (err) {
+                console.error('Erro ao alternar seguimento:', err);
+                alert('Erro ao alterar seguimento');
+            }
+        }
+    </script>
+</body>
+</html>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - VEditor</title>
+    <link rel="icon" href="Nova pasta/iconV.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(10, 10, 10, 0.95);
+            border-bottom: 2px solid #9d4edd;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-back {
+            color: #c77dff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-back:hover {
+            gap: 15px;
+        }
+
+        .navbar-logo {
+            width: 40px;
+            height: 40px;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #7209b7 0%, #3a0ca3 100%);
+            padding: 60px 30px;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #c77dff;
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+        }
+
+        .profile-header-avatar {
+            width: 140px;
+            height: 140px;
+            min-width: 140px;
+            border-radius: 50%;
+            border: 4px solid #000;
+            object-fit: cover;
+            box-shadow: 0 0 30px rgba(199, 125, 255, 0.4);
+        }
+
+        .profile-header-info h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #000;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-header-info p {
+            color: #000;
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .profile-header-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-follow {
+            background: #9d4edd;
+            color: #fff;
+        }
+
+        .btn-follow:hover {
+            background: #c77dff;
+            transform: scale(1.05);
+        }
+
+        .btn-follow.following {
+            background: rgba(199, 125, 255, 0.3);
+            border: 2px solid #c77dff;
+            color: #c77dff;
+        }
+
+        .profile-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px 60px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #c77dff;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title i {
+            font-size: 32px;
+        }
+
+        .modelos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .modelo-card {
+            background: rgba(26, 10, 46, 0.6);
+            border: 1px solid #9d4edd;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .modelo-card:hover {
+            border-color: #c77dff;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(114, 9, 183, 0.3);
+        }
+
+        .modelo-image {
+            width: 100%;
+            height: 200px;
+            background: rgba(199, 125, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .modelo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modelo-info {
+            padding: 20px;
+        }
+
+        .modelo-title {
+            font-weight: 600;
+            color: #c77dff;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .modelo-author {
+            font-size: 12px;
+            color: #c0c0c0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .modelo-packages {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .package-badge {
+            background: rgba(199, 125, 255, 0.2);
+            color: #c77dff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .modelo-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #c0c0c0;
+            padding-top: 12px;
+            border-top: 1px solid rgba(199, 125, 255, 0.1);
+        }
+
+        .status-badge {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ff88;
+        }
+
+        .followers-section {
+            margin-top: 60px;
+            margin-bottom: 60px;
+        }
+
+        .followers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+        }
+
+        .follower-card {
+            background: rgba(114, 9, 183, 0.1);
+            border: 1px solid #9d4edd;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .follower-card:hover {
+            border-color: #c77dff;
+            background: rgba(114, 9, 183, 0.2);
+        }
+
+        .follower-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            border: 2px solid #9d4edd;
+            object-fit: cover;
+        }
+
+        .follower-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #c77dff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 30px;
+            color: #c0c0c0;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 18px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #c77dff;
+        }
+
+        .spinner {
+            border: 3px solid rgba(199, 125, 255, 0.2);
+            border-top: 3px solid #c77dff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .profile-header-info h1 {
+                font-size: 36px;
+            }
+
+            .modelos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile-header {
+                padding: 30px 15px;
+            }
+
+            .profile-header-avatar {
+                width: 100px;
+                height: 100px;
+            }
+
+            .profile-header-info h1 {
+                font-size: 28px;
+            }
+
+            .modelos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .followers-grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="home.html" class="navbar-back">
+            <i class="fas fa-arrow-left"></i>
+            <span>Voltar</span>
+        </a>
+        <img src="Nova pasta/iconV.png" alt="V Logo" class="navbar-logo">
+        <div style="width: 40px;"></div>
+    </nav>
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <img id="profile-avatar" class="profile-header-avatar" src="" alt="Avatar">
+        <div class="profile-header-info">
+            <h1 id="profile-name">Carregando...</h1>
+            <p id="profile-bio"></p>
+            <div class="profile-header-actions">
+                <button class="btn btn-follow" id="follow-btn" onclick="alternarSeguimento()" style="display: none;">
+                    <i class="fas fa-user-plus"></i>
+                    <span id="follow-text">Seguir</span>
+                </button>
+                <a href="https://x.com/AyoV_Comms" target="_blank" class="btn" style="background: #9d4edd; color: #fff;">
+                    <i class="fab fa-twitter"></i>
+                    Contato
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="profile-content">
+        <!-- Modelos Section -->
+        <section>
+            <div class="section-title">
+                <i class="fas fa-star"></i>
+                Seus Modelos
+            </div>
+            <div id="modelos-container" class="modelos-grid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Carregando modelos...
+                </div>
+            </div>
+        </section>
+
+        <!-- Followers Section -->
+        <section class="followers-section" id="followers-section" style="display: none;">
+            <div class="section-title">
+                <i class="fas fa-users"></i>
+                Seguidores
+            </div>
+            <div id="followers-container" class="followers-grid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Carregando seguidores...
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://knbloqfdvlioxxkxthif.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuYmxvcWZkdmxpb3h4a3h0aGlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNTIxNTMsImV4cCI6MjA5NDcyODE1M30.wDdPtUEBv8I00j0t-mlmdp3GDEcCZyRe1_BacNsQoCU';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let currentUserId = null;
+        let currentUserDiscordId = null;
+
+        window.addEventListener('load', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            currentUserId = urlParams.get('id');
+            
+            const userData = JSON.parse(localStorage.getItem('discord_user') || '{}');
+            currentUserDiscordId = userData.id;
+
+            console.log('Perfil do usuário:', currentUserId);
+            console.log('Usuário logado:', currentUserDiscordId);
+
+            if (currentUserId) {
+                carregarPerfilUsuario();
+                carregarModelos();
+                carregarSeguidores();
+                verificarFollowStatus();
+            }
+        });
+
+        async function carregarPerfilUsuario() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('perfis')
+                    .select('*')
+                    .eq('id_discord', currentUserId)
+                    .single();
+
+                if (error) throw error;
+
+                if (data) {
+                    document.getElementById('profile-name').textContent = data.username || 'Usuário';
+                    document.getElementById('profile-avatar').src = data.avatar_url || 'https://via.placeholder.com/140';
+                }
+            } catch (err) {
+                console.error('Erro ao carregar perfil:', err);
+            }
+        }
+
+        async function carregarModelos() {
+            try {
+                const { data: modelos, error } = await supabaseClient
+                    .from('produtos_usuarios')
+                    .select('*')
+                    .eq('id_usuario_discord', currentUserId);
+
+                if (error) throw error;
+
+                const container = document.getElementById('modelos-container');
+                container.innerHTML = '';
+
+                console.log('Modelos carregados:', modelos);
+
+                if (!modelos || modelos.length === 0) {
+                    container.innerHTML = `
+                        <div style="grid-column: 1 / -1;">
+                            <div class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                <p>Nenhum modelo disponível</p>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                modelos.forEach(modelo => {
+                    const card = document.createElement('div');
+                    card.className = 'modelo-card';
+                    card.innerHTML = `
+                        <div class="modelo-image">
+                            <img src="image/AvisoModelo.png" alt="${modelo.nome_produto}" onerror="this.src='https://via.placeholder.com/280x250'">
+                        </div>
+                        <div class="modelo-info">
+                            <div class="modelo-title">${modelo.nome_produto}</div>
+                            <div class="modelo-author">
+                                <i class="fas fa-user-circle"></i>
+                                ${modelo.descricao || 'Modelo'}
+                            </div>
+                            <div class="modelo-packages">
+                                <span class="package-badge"><i class="fas fa-check"></i> Completo</span>
+                            </div>
+                            <div class="modelo-status">
+                                <span class="status-badge"></span>
+                                Disponível
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                console.error('Erro ao carregar modelos:', err);
+                document.getElementById('modelos-container').innerHTML = `
+                    <div style="grid-column: 1 / -1;">
+                        <div class="empty-state">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p>Erro ao carregar modelos</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        async function carregarSeguidores() {
+            try {
+                const { data: followers, error } = await supabaseClient
+                    .from('followers')
+                    .select(`
+                        *,
+                        perfis:seguidor_id(id_discord, username, avatar_url)
+                    `)
+                    .eq('seguindo_id', currentUserId);
+
+                if (error) throw error;
+
+                const container = document.getElementById('followers-container');
+                const section = document.getElementById('followers-section');
+                container.innerHTML = '';
+
+                console.log('Seguidores carregados:', followers);
+
+                if (!followers || followers.length === 0) {
+                    section.style.display = 'none';
+                    return;
+                }
+
+                section.style.display = 'block';
+
+                followers.forEach(follow => {
+                    const perfil = follow.perfis;
+                    const card = document.createElement('div');
+                    card.className = 'follower-card';
+                    card.onclick = () => window.location.href = `perfil.html?id=${perfil.id_discord}`;
+                    card.innerHTML = `
+                        <img src="${perfil.avatar_url || 'https://via.placeholder.com/60'}" class="follower-avatar" alt="${perfil.username}">
+                        <div class="follower-name">${perfil.username}</div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                console.error('Erro ao carregar seguidores:', err);
+                document.getElementById('followers-section').style.display = 'none';
+            }
+        }
+
+        async function verificarFollowStatus() {
+            if (!currentUserDiscordId || currentUserDiscordId === currentUserId) {
+                document.getElementById('follow-btn').style.display = 'none';
+                return;
+            }
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('followers')
+                    .select('*')
+                    .eq('seguidor_id', currentUserDiscordId)
+                    .eq('seguindo_id', currentUserId)
+                    .single();
+
+                const btn = document.getElementById('follow-btn');
+                btn.style.display = 'block';
+
+                if (data) {
+                    btn.classList.add('following');
+                    btn.innerHTML = '<i class="fas fa-check"></i> Seguindo';
+                } else {
+                    btn.classList.remove('following');
+                    btn.innerHTML = '<i class="fas fa-user-plus"></i> Seguir';
+                }
+            } catch (err) {
+                document.getElementById('follow-btn').style.display = 'block';
+            }
+        }
+
+        async function alternarSeguimento() {
+            if (!currentUserDiscordId) {
+                alert('Faça login com Discord para seguir');
+                return;
+            }
+
+            if (currentUserDiscordId === currentUserId) {
+                alert('Você não pode seguir a si mesmo');
+                return;
+            }
+
+            try {
+                const { data: existing } = await supabaseClient
+                    .from('followers')
+                    .select('*')
+                    .eq('seguidor_id', currentUserDiscordId)
+                    .eq('seguindo_id', currentUserId)
+                    .single();
+
+                const btn = document.getElementById('follow-btn');
+
+                if (existing) {
+                    // Unfollow
+                    await supabaseClient
+                        .from('followers')
+                        .delete()
+                        .eq('seguidor_id', currentUserDiscordId)
+                        .eq('seguindo_id', currentUserId);
+
+                    btn.classList.remove('following');
+                    btn.innerHTML = '<i class="fas fa-user-plus"></i> Seguir';
+                } else {
+                    // Follow
+                    await supabaseClient
+                        .from('followers')
+                        .insert({
+                            seguidor_id: currentUserDiscordId,
+                            seguindo_id: currentUserId
+                        });
+
+                    btn.classList.add('following');
+                    btn.innerHTML = '<i class="fas fa-check"></i> Seguindo';
+                }
+
+                // Recarregar seguidores
+                await carregarSeguidores();
+            } catch (err) {
+                console.error('Erro ao alternar seguimento:', err);
+                alert('Erro ao alterar seguimento');
+            }
+        }
+    </script>
+</body>
+</html>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+        }
+
         /* Navbar */
         .navbar {
             background: rgba(10, 10, 10, 0.95);
@@ -403,7 +1691,7 @@
             <h1 id="profile-name">Carregando...</h1>
             <p id="profile-bio"></p>
             <div class="profile-header-actions">
-                <button class="btn btn-follow" id="follow-btn" onclick="toggleFollow()">
+                <button class="btn btn-follow" id="follow-btn" onclick="alternarSeguimento()" style="display: none;">
                     <i class="fas fa-user-plus"></i>
                     <span id="follow-text">Seguir</span>
                 </button>
