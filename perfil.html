@@ -453,17 +453,20 @@
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         let currentUserId = null;
-        let loggedInUserId = null;
+        let currentUserDiscordId = null;
 
         window.addEventListener('load', () => {
             const urlParams = new URLSearchParams(window.location.search);
             currentUserId = urlParams.get('id');
-            loggedInUserId = localStorage.getItem('discord_id');
+            
+            const userData = JSON.parse(localStorage.getItem('discord_user') || '{}');
+            currentUserDiscordId = userData.id;
 
             if (currentUserId) {
                 carregarPerfilUsuario();
                 carregarModelos();
                 carregarSeguidores();
+                verificarFollowStatus();
             }
         });
 
@@ -480,7 +483,6 @@
                 if (data) {
                     document.getElementById('profile-name').textContent = data.username || 'Usuário';
                     document.getElementById('profile-avatar').src = data.avatar_url || 'https://via.placeholder.com/140';
-                    document.getElementById('profile-bio').textContent = data.descricao || '';
                 }
             } catch (err) {
                 console.error('Erro ao carregar perfil:', err);
@@ -494,10 +496,15 @@
                     .select('*')
                     .eq('id_usuario_discord', currentUserId);
 
-                if (error) throw error;
+                if (error) {
+                    console.error('Erro SQL:', error);
+                    throw error;
+                }
 
                 const container = document.getElementById('modelos-container');
                 container.innerHTML = '';
+
+                console.log('Modelos carregados:', modelos);
 
                 if (!modelos || modelos.length === 0) {
                     container.innerHTML = `
@@ -508,8 +515,11 @@
                             </div>
                         </div>
                     `;
+                    document.getElementById('total-modelos').textContent = '0';
                     return;
                 }
+
+                document.getElementById('total-modelos').textContent = modelos.length;
 
                 modelos.forEach(modelo => {
                     const card = document.createElement('div');
@@ -537,6 +547,14 @@
                 });
             } catch (err) {
                 console.error('Erro ao carregar modelos:', err);
+                document.getElementById('modelos-container').innerHTML = `
+                    <div style="grid-column: 1 / -1;">
+                        <div class="empty-state">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p>Erro ao carregar modelos</p>
+                        </div>
+                    </div>
+                `;
             }
         }
 
@@ -544,82 +562,349 @@
             try {
                 const { data: followers, error } = await supabaseClient
                     .from('followers')
-                    .select('*')
+                    .select(`
+                        *,
+                        perfis:seguidor_id(id_discord, username, avatar_url)
+                    `)
                     .eq('seguindo_id', currentUserId);
 
-                if (error) throw error;
+                if (error) {
+                    console.error('Erro SQL ao carregar seguidores:', error);
+                    throw error;
+                }
 
-                const section = document.getElementById('followers-section');
-                const container = document.getElementById('followers-container');
+                console.log('Seguidores carregados:', followers);
+
+                const container = document.getElementById('seguidores-container');
+                container.innerHTML = '';
 
                 if (!followers || followers.length === 0) {
-                    section.style.display = 'none';
+                    container.innerHTML = `
+                        <div style="grid-column: 1 / -1;">
+                            <div class="empty-state">
+                                <i class="fas fa-user-friends"></i>
+                                <p>Sem seguidores ainda</p>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('total-seguidores').textContent = '0';
                     return;
                 }
 
-                section.style.display = 'block';
-                container.innerHTML = '';
+                document.getElementById('total-seguidores').textContent = followers.length;
 
-                for (const follower of followers) {
-                    const { data: perfil } = await supabaseClient
-                        .from('perfis')
-                        .select('*')
-                        .eq('id_discord', follower.seguidor_id)
-                        .single();
-
-                    if (perfil) {
-                        const card = document.createElement('div');
-                        card.className = 'follower-card';
-                        card.onclick = () => window.location.href = `perfil.html?id=${perfil.id_discord}`;
-                        card.innerHTML = `
-                            <img src="${perfil.avatar_url}" alt="${perfil.username}" class="follower-avatar" onerror="this.src='https://via.placeholder.com/60'">
-                            <div class="follower-name">${perfil.username}</div>
-                        `;
-                        container.appendChild(card);
-                    }
-                }
+                followers.forEach(follow => {
+                    const perfil = follow.perfis;
+                    const card = document.createElement('div');
+                    card.className = 'seguidor-card';
+                    card.style.cursor = 'pointer';
+                    card.onclick = () => window.location.href = `perfil.html?id=${perfil.id_discord}`;
+                    card.innerHTML = `
+                        <img src="${perfil.avatar_url || 'https://via.placeholder.com/60'}" class="seguidor-avatar" alt="${perfil.username}">
+                        <div class="seguidor-name">${perfil.username}</div>
+                    `;
+                    container.appendChild(card);
+                });
             } catch (err) {
                 console.error('Erro ao carregar seguidores:', err);
+                document.getElementById('seguidores-container').innerHTML = `
+                    <div style="grid-column: 1 / -1;">
+                        <div class="empty-state">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p>Erro ao carregar seguidores</p>
+                        </div>
+                    </div>
+                `;
             }
         }
 
-        async function toggleFollow() {
-            if (!loggedInUserId) {
-                alert('Faça login para seguir usuários!');
-                return;
-            }
-
-            if (loggedInUserId === currentUserId) {
-                alert('Você não pode seguir a si mesmo!');
+        async function verificarFollowStatus() {
+            if (!currentUserDiscordId || currentUserDiscordId === currentUserId) {
+                document.getElementById('follow-btn').style.display = 'none';
                 return;
             }
 
             try {
-                const { data: existing } = await supabaseClient
+                const { data, error } = await supabaseClient
                     .from('followers')
                     .select('*')
-                    .eq('seguidor_id', loggedInUserId)
+                    .eq('seguidor_id', currentUserDiscordId)
                     .eq('seguindo_id', currentUserId)
                     .single();
 
                 const btn = document.getElementById('follow-btn');
-                const text = document.getElementById('follow-text');
+                btn.style.display = 'block';
+
+                if (data) {
+                    btn.classList.add('following');
+                    btn.innerHTML = '<i class="fas fa-check"></i> Seguindo';
+                } else {
+                    btn.classList.remove('following');
+                    btn.innerHTML = '<i class="fas fa-plus"></i> Seguir';
+                }
+            } catch (err) {
+                document.getElementById('follow-btn').style.display = 'block';
+            }
+        }
+
+        async function alternarSeguimento() {
+            if (!currentUserDiscordId) {
+                alert('Faça login com Discord para seguir');
+                return;
+            }
+
+            if (currentUserDiscordId === currentUserId) {
+                alert('Você não pode seguir a si mesmo');
+                return;
+            }
+
+            try {
+                const { data: existing, error: selectError } = await supabaseClient
+                    .from('followers')
+                    .select('*')
+                    .eq('seguidor_id', currentUserDiscordId)
+                    .eq('seguindo_id', currentUserId)
+                    .single();
+
+                const btn = document.getElementById('follow-btn');
 
                 if (existing) {
                     // Unfollow
-                    await supabaseClient
+                    const { error: deleteError } = await supabaseClient
                         .from('followers')
                         .delete()
-                        .eq('seguidor_id', loggedInUserId)
+                        .eq('seguidor_id', currentUserDiscordId)
                         .eq('seguindo_id', currentUserId);
 
+                    if (deleteError) throw deleteError;
                     btn.classList.remove('following');
-                    text.textContent = 'Seguir';
+                    btn.innerHTML = '<i class="fas fa-plus"></i> Seguir';
                 } else {
                     // Follow
-                    await supabaseClient
+                    const { error: insertError } = await supabaseClient
                         .from('followers')
                         .insert({
+                            seguidor_id: currentUserDiscordId,
+                            seguindo_id: currentUserId
+                        });
+
+                    if (insertError) throw insertError;
+                    btn.classList.add('following');
+                    btn.innerHTML = '<i class="fas fa-check"></i> Seguindo';
+                }
+
+                // Recarregar contador de seguidores
+                await carregarSeguidores();
+            } catch (err) {
+                console.error('Erro ao alternar seguimento:', err);
+                alert('Erro ao alternar seguimento');
+            }
+        }
+    </script>
+</body>
+</html>{
+            try {
+                const { data, error } = await supabaseClient
+                    .from('perfis')
+                    .select('*')
+                    .eq('id_discord', currentUserId)
+                    .single();
+
+                if (error) throw error;
+
+                if (data) {
+                    document.getElementById('profile-name').textContent = data.username || 'Usuário';
+                    document.getElementById('profile-avatar').src = data.avatar_url || 'https://via.placeholder.com/140';
+                    document.getElementById('profile-bio').textContent = data.descricao || '';
+                }
+            } catch (err) {
+                console.error('Erro ao carregar perfil:', err);
+            }
+        }
+
+        async function carregarModelos() {
+            try {
+                const { data: modelos, error } = await supabaseClient
+                    .from('produtos_usuarios')
+                    .select('*')
+                    .eq('id_usuario_discord', currentUserId);
+
+                if (error) {
+                    console.error('Erro SQL:', error);
+                    throw error;
+                }
+
+                const container = document.getElementById('modelos-container');
+                container.innerHTML = '';
+
+                console.log('Modelos carregados:', modelos);
+
+                if (!modelos || modelos.length === 0) {
+                    container.innerHTML = `
+                        <div style="grid-column: 1 / -1;">
+                            <div class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                <p>Nenhum modelo disponível</p>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('total-modelos').textContent = '0';
+                    return;
+                }
+
+                document.getElementById('total-modelos').textContent = modelos.length;
+
+                modelos.forEach(modelo => {
+                    const card = document.createElement('div');
+                    card.className = 'modelo-card';
+                    card.innerHTML = `
+                        <div class="modelo-image">
+                            <img src="image/AvisoModelo.png" alt="${modelo.nome_produto}" onerror="this.src='https://via.placeholder.com/280x250'">
+                        </div>
+                        <div class="modelo-info">
+                            <div class="modelo-title">${modelo.nome_produto}</div>
+                            <div class="modelo-author">
+                                <i class="fas fa-user-circle"></i>
+                                ${modelo.descricao || 'Modelo'}
+                            </div>
+                            <div class="modelo-packages">
+                                <span class="package-badge"><i class="fas fa-check"></i> Completo</span>
+                            </div>
+                            <div class="modelo-status">
+                                <span class="status-badge"></span>
+                                Disponível
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                console.error('Erro ao carregar modelos:', err);
+                document.getElementById('modelos-container').innerHTML = `
+                    <div style="grid-column: 1 / -1;">
+                        <div class="empty-state">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p>Erro ao carregar modelos</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        async function carregarSeguidores() {
+            try {
+                const { data: followers, error } = await supabaseClient
+                    .from('followers')
+                    .select(`
+                        *,
+                        perfis:seguidor_id(id_discord, username, avatar_url)
+                    `)
+                    .eq('seguindo_id', currentUserId);
+
+                if (error) {
+                    console.error('Erro SQL ao carregar seguidores:', error);
+                    throw error;
+                }
+
+                console.log('Seguidores carregados:', followers);
+
+                const container = document.getElementById('seguidores-container');
+                container.innerHTML = '';
+
+                if (!followers || followers.length === 0) {
+                    container.innerHTML = `
+                        <div style="grid-column: 1 / -1;">
+                            <div class="empty-state">
+                                <i class="fas fa-user-friends"></i>
+                                <p>Sem seguidores ainda</p>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('total-seguidores').textContent = '0';
+                    return;
+                }
+
+                document.getElementById('total-seguidores').textContent = followers.length;
+
+                followers.forEach(follow => {
+                    const perfil = follow.perfis;
+                    const card = document.createElement('div');
+                    card.className = 'seguidor-card';
+                    card.style.cursor = 'pointer';
+                    card.onclick = () => window.location.href = `perfil.html?id=${perfil.id_discord}`;
+                    card.innerHTML = `
+                        <img src="${perfil.avatar_url || 'https://via.placeholder.com/60'}" class="seguidor-avatar" alt="${perfil.username}">
+                        <div class="seguidor-name">${perfil.username}</div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                console.error('Erro ao carregar seguidores:', err);
+                document.getElementById('seguidores-container').innerHTML = `
+                    <div style="grid-column: 1 / -1;">
+                        <div class="empty-state">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p>Erro ao carregar seguidores</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        async function alternarSeguimento() {
+            if (!currentUserDiscordId) {
+                alert('Faça login com Discord para seguir');
+                return;
+            }
+
+            if (currentUserDiscordId === currentUserId) {
+                alert('Você não pode seguir a si mesmo');
+                return;
+            }
+
+            try {
+                const { data: existing, error: selectError } = await supabaseClient
+                    .from('followers')
+                    .select('*')
+                    .eq('seguidor_id', currentUserDiscordId)
+                    .eq('seguindo_id', currentUserId)
+                    .single();
+
+                const btn = document.getElementById('follow-btn');
+
+                if (existing) {
+                    // Unfollow
+                    const { error: deleteError } = await supabaseClient
+                        .from('followers')
+                        .delete()
+                        .eq('seguidor_id', currentUserDiscordId)
+                        .eq('seguindo_id', currentUserId);
+
+                    if (deleteError) throw deleteError;
+                    btn.classList.remove('following');
+                    btn.innerHTML = '<i class="fas fa-plus"></i> Seguir';
+                } else {
+                    // Follow
+                    const { error: insertError } = await supabaseClient
+                        .from('followers')
+                        .insert({
+                            seguidor_id: currentUserDiscordId,
+                            seguindo_id: currentUserId
+                        });
+
+                    if (insertError) throw insertError;
+                    btn.classList.add('following');
+                    btn.innerHTML = '<i class="fas fa-check"></i> Seguindo';
+                }
+
+                // Recarregar contador de seguidores
+                await carregarSeguidores();
+            } catch (err) {
+                console.error('Erro ao alternar seguimento:', err);
+                alert('Erro ao alternar seguimento');
+            }
+        }
+
                             seguidor_id: loggedInUserId,
                             seguindo_id: currentUserId
                         });
