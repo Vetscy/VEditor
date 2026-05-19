@@ -1,7 +1,9 @@
 // ============ Configuração do Supabase ============
 const SUPABASE_URL = 'https://knbloqfdvlioxxkxthif.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuYmxvcWZkdmxpb3h4a3h0aGlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNTIxNTMsImV4cCI6MjA5NDcyODE1M30.wDdPtUEBv8I00j0t-mlmdp3GDEcCZyRe1_BacNsQoCU';
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Usar supabase.createClient() ao invés de window.supabase.createClient()
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 document.addEventListener('DOMContentLoaded', () => {
     // Animação suave do scroll
@@ -99,6 +101,7 @@ function checkDiscordLogin() {
                 if (response.id) {
                     // Salvar dados do usuário
                     localStorage.setItem('discord_user', JSON.stringify(response));
+                    localStorage.setItem('discord_id', response.id);
                     displayUserProfile(response);
                     // Abrir modal automaticamente
                     openDiscordLogin();
@@ -155,7 +158,19 @@ function displayUserProfile(userData) {
             navAvatar.src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
         }
         if (navUsername) navUsername.innerText = userData.username || 'Usuário';
-        userProfileNav.onclick = openDiscordLogin;
+        // Clique abre o perfil público do usuário
+        userProfileNav.onclick = () => window.location.href = `perfil.html?id=${userData.id}`;
+    }
+
+    // Mostrar botão "Meu Perfil" no modal
+    const verPerfilBtn = document.getElementById('ver-perfil-btn');
+    if (verPerfilBtn) {
+        verPerfilBtn.style.display = 'flex';
+    }
+
+    // Salvar discord_id se não estiver armazenado
+    if (!localStorage.getItem('discord_id')) {
+        localStorage.setItem('discord_id', userData.id);
     }
 
     // ============ Salvar/Atualizar perfil no Supabase ============
@@ -413,5 +428,16 @@ async function carregarProdutosSupabase(discordId, modalElement) {
         console.error('Erro na conexão com Supabase:', err);
         showNotification('Erro ao conectar ao banco de dados!', 'error');
         document.getElementById('purchases-modal').remove();
+    }
+}
+
+// Função para abrir o perfil do usuário logado
+function abrirMeuPerfil() {
+    const discordId = localStorage.getItem('discord_id');
+    if (discordId) {
+        closeDiscordLogin();
+        window.location.href = `perfil.html?id=${discordId}`;
+    } else {
+        showNotification('Erro ao carregar seu perfil!', 'error');
     }
 }
