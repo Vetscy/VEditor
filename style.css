@@ -448,8 +448,10 @@ body {
 
 .news-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .news-card {
@@ -610,6 +612,15 @@ body {
         gap: 20px;
     }
     
+    .news {
+        padding: 60px 30px;
+    }
+
+    .news-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
     .contact-section {
         padding: 60px 30px;
     }
@@ -684,5 +695,22 @@ body {
     .contact-btn {
         padding: 10px 18px;
         font-size: 0.85rem;
+    }
+
+    .news {
+        padding: 40px 20px;
+    }
+
+    .news-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .news-card {
+        padding: 25px;
+    }
+
+    .news-card h3 {
+        font-size: 1.1rem;
     }
 }
