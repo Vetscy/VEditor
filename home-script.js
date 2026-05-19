@@ -431,12 +431,187 @@ async function carregarProdutosSupabase(discordId, modalElement) {
     }
 }
 
-// Função para abrir o perfil do usuário logado
+// Função para abrir perfil em modal
+function openProfileModal(discordId) {
+    const modal = document.getElementById('profile-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    
+    // Carregar dados do perfil
+    carregarPerfilNoModal(discordId);
+    currentModalUserId = discordId;
+}
+
+function closeProfileModal() {
+    const modal = document.getElementById('profile-modal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+    currentModalUserId = null;
+}
+
+let currentModalUserId = null;
+
+async function carregarPerfilNoModal(discordId) {
+    try {
+        // Carregar perfil
+        const { data: perfil } = await supabaseClient
+            .from('perfis')
+            .select('*')
+            .eq('id_discord', discordId)
+            .single();
+
+        if (perfil) {
+            document.getElementById('modal-profile-name').textContent = perfil.username || 'Usuário';
+            document.getElementById('modal-profile-avatar').src = perfil.avatar_url || 'https://via.placeholder.com/80';
+            document.getElementById('modal-profile-id').textContent = `ID: ${discordId}`;
+        }
+
+        // Carregar modelos
+        const { data: modelos } = await supabaseClient
+            .from('produtos_usuarios')
+            .select('*')
+            .eq('id_usuario_discord', discordId);
+
+        const modelosContainer = document.getElementById('modal-modelos-container');
+        modelosContainer.innerHTML = '';
+
+        if (modelos && modelos.length > 0) {
+            modelos.forEach(modelo => {
+                const card = document.createElement('div');
+                card.className = 'modal-modelo-card';
+                card.innerHTML = `
+                    <div class="modal-modelo-image">
+                        <img src="image/AvisoModelo.png" alt="${modelo.nome_produto}" onerror="this.src='https://via.placeholder.com/150'">
+                    </div>
+                    <div class="modal-modelo-info">
+                        <div class="modal-modelo-title">${modelo.nome_produto}</div>
+                        <div class="modal-modelo-desc">${modelo.descricao || 'Modelo'}</div>
+                    </div>
+                `;
+                modelosContainer.appendChild(card);
+            });
+        } else {
+            modelosContainer.innerHTML = '<div style="text-align: center; color: #c0c0c0; padding: 20px; grid-column: 1/-1;">Sem modelos</div>';
+        }
+
+        // Carregar seguidores
+        const { data: followers } = await supabaseClient
+            .from('followers')
+            .select(`*, perfis:seguidor_id(id_discord, username, avatar_url)`)
+            .eq('seguindo_id', discordId);
+
+        const followersSection = document.getElementById('modal-followers-section');
+        const followersContainer = document.getElementById('modal-followers-container');
+        followersContainer.innerHTML = '';
+
+        if (followers && followers.length > 0) {
+            followersSection.style.display = 'block';
+            followers.forEach(follow => {
+                const perfil = follow.perfis;
+                const card = document.createElement('div');
+                card.className = 'modal-follower-card';
+                card.innerHTML = `
+                    <img src="${perfil.avatar_url || 'https://via.placeholder.com/50'}" class="modal-follower-avatar" alt="${perfil.username}">
+                    <div class="modal-follower-name">${perfil.username}</div>
+                `;
+                card.onclick = () => {
+                    closeProfileModal();
+                    setTimeout(() => openProfileModal(perfil.id_discord), 100);
+                };
+                followersContainer.appendChild(card);
+            });
+        } else {
+            followersSection.style.display = 'none';
+        }
+
+        // Verificar status de seguimento
+        const currentUser = JSON.parse(localStorage.getItem('discord_user') || '{}');
+        const followBtn = document.getElementById('modal-follow-btn');
+        
+        if (currentUser.id && currentUser.id !== discordId) {
+            followBtn.style.display = 'block';
+            
+            const { data: isFollowing } = await supabaseClient
+                .from('followers')
+                .select('*')
+                .eq('seguidor_id', currentUser.id)
+                .eq('seguindo_id', discordId)
+                .single();
+
+            if (isFollowing) {
+                followBtn.classList.add('following');
+                followBtn.innerHTML = '<i class="fas fa-check"></i> <span id="modal-follow-text">Seguindo</span>';
+            } else {
+                followBtn.classList.remove('following');
+                followBtn.innerHTML = '<i class="fas fa-user-plus"></i> <span id="modal-follow-text">Seguir</span>';
+            }
+        } else {
+            followBtn.style.display = 'none';
+        }
+    } catch (err) {
+        console.error('Erro ao carregar perfil:', err);
+    }
+}
+
+async function toggleModalFollow() {
+    const currentUser = JSON.parse(localStorage.getItem('discord_user') || '{}');
+    
+    if (!currentUser.id) {
+        alert('Faça login com Discord para seguir');
+        return;
+    }
+
+    if (currentUser.id === currentModalUserId) {
+        alert('Você não pode seguir a si mesmo');
+        return;
+    }
+
+    try {
+        const { data: isFollowing } = await supabaseClient
+            .from('followers')
+            .select('*')
+            .eq('seguidor_id', currentUser.id)
+            .eq('seguindo_id', currentModalUserId)
+            .single();
+
+        const followBtn = document.getElementById('modal-follow-btn');
+
+        if (isFollowing) {
+            // Unfollow
+            await supabaseClient
+                .from('followers')
+                .delete()
+                .eq('seguidor_id', currentUser.id)
+                .eq('seguindo_id', currentModalUserId);
+
+            followBtn.classList.remove('following');
+            followBtn.innerHTML = '<i class="fas fa-user-plus"></i> <span id="modal-follow-text">Seguir</span>';
+        } else {
+            // Follow
+            await supabaseClient
+                .from('followers')
+                .insert({
+                    seguidor_id: currentUser.id,
+                    seguindo_id: currentModalUserId
+                });
+
+            followBtn.classList.add('following');
+            followBtn.innerHTML = '<i class="fas fa-check"></i> <span id="modal-follow-text">Seguindo</span>';
+        }
+
+        // Recarregar dados
+        await carregarPerfilNoModal(currentModalUserId);
+    } catch (err) {
+        console.error('Erro ao seguir:', err);
+    }
+}
+
+// Função para abrir o perfil do usuário logado (mantém compatibilidade)
 function abrirMeuPerfil() {
     const discordId = localStorage.getItem('discord_id');
     if (discordId) {
         closeDiscordLogin();
-        window.location.href = `perfil.html?id=${discordId}`;
+        openProfileModal(discordId);
     } else {
         showNotification('Erro ao carregar seu perfil!', 'error');
     }
