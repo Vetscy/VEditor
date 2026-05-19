@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artistas - V Edições e Comissões</title>
+    <link rel="icon" href="Nova pasta/iconV.png" type="image/png">
+    <link rel="stylesheet" href="home-style.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="protect.js" defer></script>
+    <style>
+        .artists-header {
+            background: linear-gradient(135deg, #1a0a2e 0%, #2d0a47 100%);
+            border-bottom: 2px solid #9d4edd;
+            padding: 60px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .artists-header h1 {
+            font-size: 48px;
+            color: #c77dff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(199, 125, 255, 0.2);
+        }
+
+        .artists-header p {
+            color: #c0c0c0;
+            font-size: 18px;
+        }
+
+        .search-container {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            display: flex;
+            gap: 10px;
+            padding: 0 20px;
+        }
+
+        .search-input {
+            flex: 1;
+            background: rgba(26, 10, 46, 0.6);
+            border: 2px solid #9d4edd;
+            border-radius: 8px;
+            padding: 12px 20px;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+        }
+
+        .search-input::placeholder {
+            color: #9d4edd;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #c77dff;
+            box-shadow: 0 0 20px rgba(199, 125, 255, 0.3);
+        }
+
+        .artists-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .artist-card {
+            background: linear-gradient(135deg, rgba(157, 78, 221, 0.15) 0%, rgba(199, 125, 255, 0.05) 100%);
+            border: 2px solid #9d4edd;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .artist-card:hover {
+            border-color: #c77dff;
+            background: linear-gradient(135deg, rgba(157, 78, 221, 0.25) 0%, rgba(199, 125, 255, 0.15) 100%);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(157, 78, 221, 0.3);
+        }
+
+        .artist-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(199, 125, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .artist-card:hover::before {
+            left: 100%;
+        }
+
+        .artist-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 3px solid #c77dff;
+            object-fit: cover;
+            box-shadow: 0 0 20px rgba(199, 125, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .artist-card:hover .artist-avatar {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(199, 125, 255, 0.5);
+        }
+
+        .artist-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #c77dff;
+            margin-bottom: 8px;
+        }
+
+        .artist-info {
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            margin: 15px 0;
+            padding: 15px 0;
+            border-top: 1px solid rgba(157, 78, 221, 0.2);
+            border-bottom: 1px solid rgba(157, 78, 221, 0.2);
+        }
+
+        .artist-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .artist-stat-number {
+            font-size: 18px;
+            font-weight: 700;
+            color: #c77dff;
+        }
+
+        .artist-stat-label {
+            font-size: 11px;
+            color: #c0c0c0;
+            margin-top: 3px;
+        }
+
+        .view-profile-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #9d4edd 0%, #c77dff 100%);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .view-profile-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(157, 78, 221, 0.4);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #c0c0c0;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: #9d4edd;
+            margin-bottom: 20px;
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .loading-state i {
+            font-size: 48px;
+            color: #c77dff;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .sort-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .sort-btn {
+            background: rgba(157, 78, 221, 0.2);
+            border: 1px solid #9d4edd;
+            color: #c77dff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .sort-btn:hover,
+        .sort-btn.active {
+            background: #9d4edd;
+            border-color: #c77dff;
+        }
+
+        @media (max-width: 768px) {
+            .artists-header h1 {
+                font-size: 32px;
+            }
+
+            .artists-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegação Flutuante -->
+    <nav class="floating-nav">
+        <div class="nav-content">
+            <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+            <a href="comissoes.html" class="nav-link"><i class="fas fa-star"></i> Comissões</a>
+            <a href="portfolio.html" class="nav-link"><i class="fas fa-images"></i> Portfólio</a>
+            <a href="artistas.html" class="nav-link"><i class="fas fa-users"></i> Artistas</a>
+            <button id="discord-nav-btn" onclick="openDiscordLogin()" class="nav-link">
+                <i class="fas fa-discord"></i> Discord
+            </button>
+            <div id="user-profile-nav" style="display: none; cursor: pointer; align-items: center; gap: 8px;">
+                <img id="nav-avatar" src="" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">
+                <span id="nav-username" style="font-size: 12px;">Usuário</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="artists-header">
+        <h1><i class="fas fa-users"></i> Comunidade de Artistas</h1>
+        <p>Conheça os artistas da comunidade e seus trabalhos</p>
+    </div>
+
+    <!-- Search -->
+    <div class="search-container">
+        <input type="text" id="search-input" class="search-input" placeholder="Buscar artista...">
+    </div>
+
+    <!-- Sort Buttons -->
+    <div class="artists-container">
+        <div class="sort-buttons">
+            <button class="sort-btn active" onclick="sortArtists('recent')">
+                <i class="fas fa-clock"></i> Recentes
+            </button>
+            <button class="sort-btn" onclick="sortArtists('followers')">
+                <i class="fas fa-users"></i> Mais Seguidos
+            </button>
+            <button class="sort-btn" onclick="sortArtists('purchases')">
+                <i class="fas fa-star"></i> Mais Ativos
+            </button>
+        </div>
+
+        <!-- Artists Grid -->
+        <div class="artists-grid" id="artists-container">
+            <div class="loading-state">
+                <i class="fas fa-spinner"></i><br>
+                <p style="color: #c0c0c0; margin-top: 20px;">Carregando artistas...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Discord Login Modal -->
+    <div id="discord-login" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeDiscordLogin()">&times;</span>
+            <h2>Conectar com Discord</h2>
+            <p>Faça login com sua conta Discord para acessar todos os recursos</p>
+            <a href="https://discord.com/api/oauth2/authorize?client_id=1289065629449314307&response_type=token&redirect_uri=https://vetscy.github.io/VEditor/&scope=identify+email+guilds" 
+               target="_blank" rel="noopener noreferrer" class="btn-discord">
+                <i class="fab fa-discord"></i> Entrar com Discord
+            </a>
+        </div>
+    </div>
+
+    <script src="home-script.js"></script>
+    <script>
+        const SUPABASE_URL = 'https://knbloqfdvlioxxkxthif.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuYmxvcWZkdmxpb3h4a3h0aGlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNTIxNTMsImV4cCI6MjA5NDcyODE1M30.wDdPtUEBv8I00j0t-mlmdp3GDEcCZyRe1_BacNsQoCU';
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let allArtists = [];
+        let currentSort = 'recent';
+
+        window.addEventListener('load', () => {
+            carregarArtistas();
+
+            const userData = JSON.parse(localStorage.getItem('discord_user') || '{}');
+            if (userData.id) {
+                document.getElementById('discord-nav-btn').style.display = 'none';
+                document.getElementById('user-profile-nav').style.display = 'flex';
+                document.getElementById('nav-avatar').src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
+                document.getElementById('nav-username').textContent = userData.username;
+            }
+
+            // Search
+            document.getElementById('search-input').addEventListener('input', filtrarArtistas);
+        });
+
+        async function carregarArtistas() {
+            try {
+                const { data: perfis, error } = await supabaseClient
+                    .from('perfis')
+                    .select('*');
+
+                if (error) throw error;
+
+                // Para cada perfil, contar produtos e seguidores
+                const artistasComStats = await Promise.all(
+                    (perfis || []).map(async (perfil) => {
+                        const { count: totalProdutos } = await supabaseClient
+                            .from('produtos_usuarios')
+                            .select('*', { count: 'exact', head: true })
+                            .eq('id_usuario_discord', perfil.id_discord);
+
+                        const { count: totalSeguidores } = await supabaseClient
+                            .from('followers')
+                            .select('*', { count: 'exact', head: true })
+                            .eq('seguindo_id', perfil.id_discord);
+
+                        return {
+                            ...perfil,
+                            total_produtos: totalProdutos || 0,
+                            total_seguidores: totalSeguidores || 0
+                        };
+                    })
+                );
+
+                allArtists = artistasComStats;
+                sortArtists(currentSort);
+            } catch (err) {
+                console.error('Erro ao carregar artistas:', err);
+                document.getElementById('artists-container').innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Erro ao carregar artistas</p>
+                    </div>
+                `;
+            }
+        }
+
+        function sortArtists(tipo) {
+            currentSort = tipo;
+
+            // Atualizar botões
+            document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            let sorted = [...allArtists];
+
+            switch (tipo) {
+                case 'followers':
+                    sorted.sort((a, b) => b.total_seguidores - a.total_seguidores);
+                    break;
+                case 'purchases':
+                    sorted.sort((a, b) => b.total_produtos - a.total_produtos);
+                    break;
+                default:
+                    sorted.reverse();
+            }
+
+            renderizarArtistas(sorted);
+        }
+
+        function filtrarArtistas() {
+            const termo = document.getElementById('search-input').value.toLowerCase();
+            const filtrados = allArtists.filter(artista =>
+                artista.username.toLowerCase().includes(termo)
+            );
+            renderizarArtistas(filtrados);
+        }
+
+        function renderizarArtistas(artistas) {
+            const container = document.getElementById('artists-container');
+
+            if (artistas.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <i class="fas fa-search"></i>
+                        <p>Nenhum artista encontrado</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = artistas.map(artista => `
+                <div class="artist-card">
+                    <img src="${artista.avatar_url || 'https://via.placeholder.com/120'}" 
+                         class="artist-avatar" alt="${artista.username}">
+                    
+                    <div class="artist-name">@${artista.username}</div>
+                    
+                    <div class="artist-info">
+                        <div class="artist-stat">
+                            <div class="artist-stat-number">${artista.total_produtos}</div>
+                            <div class="artist-stat-label">Compras</div>
+                        </div>
+                        <div class="artist-stat">
+                            <div class="artist-stat-number">${artista.total_seguidores}</div>
+                            <div class="artist-stat-label">Seguidores</div>
+                        </div>
+                    </div>
+
+                    ${artista.bio ? `<p style="color: #c0c0c0; font-size: 13px; margin: 10px 0;">${artista.bio}</p>` : ''}
+
+                    <button class="view-profile-btn" onclick="window.location.href='perfil.html?id=${artista.id_discord}'">
+                        <i class="fas fa-eye"></i> Ver Perfil
+                    </button>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
