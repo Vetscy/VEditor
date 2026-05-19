@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Adicionar Produto</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Adicionando produto ao perfil 678022469017141260...</h1>
+    <p id="status">Processando...</p>
+
+    <script>
+        const SUPABASE_URL = 'https://knbloqfdvlioxxkxthif.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuYmxvcWZkdmxpb3h4a3h0aGlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNTIxNTMsImV4cCI6MjA5NDcyODE1M30.wDdPtUEBv8I00j0t-mlmdp3GDEcCZyRe1_BacNsQoCU';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        async function adicionarProduto() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('produtos_usuarios')
+                    .insert({
+                        id_usuario_discord: '678022469017141260',
+                        nome_produto: 'Bizz Bizz – Model Figura | Elirie',
+                        descricao: 'Pacote Completo: Expressões, Armário, Orilhos',
+                        link_download: ''
+                    });
+
+                if (error) throw error;
+
+                document.getElementById('status').innerHTML = '✅ <strong>Produto adicionado com sucesso!</strong><br>Você pode fechar esta página.';
+            } catch (err) {
+                document.getElementById('status').innerHTML = '❌ Erro: ' + err.message;
+            }
+        }
+
+        adicionarProduto();
+    </script>
+</body>
+</html>
