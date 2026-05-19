@@ -14,6 +14,7 @@
     <meta name="twitter:description" content="Ayo, eu sou o V e seja bem-vindo ao meu site! Aqui você vai encontrar edição de vídeo e também comissão para modelos para figura!">
     <link rel="icon" href="Nova pasta/iconV.png" type="image/png">
     <link rel="stylesheet" href="comissoes-style.css">
+    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="protect.js"></script>
@@ -29,8 +30,12 @@
                 <li><a href="#portfolio" title="Portfolio"><i class="fas fa-palette"></i></a></li>
                 <li><a href="#services" title="Serviços"><i class="fas fa-star"></i></a></li>
                 <li><a href="#process" title="Processo"><i class="fas fa-list"></i></a></li>
-                <li><a href="#contact" title="Contato"><i class="fas fa-envelope"></i></a></li>
+                <li id="discord-nav-btn"><a href="#" onclick="openDiscordLogin(); return false;" title="Login"><i class="fab fa-discord"></i></a></li>
             </ul>
+            <div id="user-profile-nav" class="user-profile-nav" style="display: none;">
+                <img id="nav-avatar" src="" alt="Avatar" class="nav-avatar">
+                <span id="nav-username"></span>
+            </div>
             <a href="https://x.com/AyoV_Comms" target="_blank" class="nav-cta" title="Entre em Contato">
                 <i class="fas fa-envelope"></i>
             </a>
@@ -227,6 +232,64 @@
         </div>
     </section>
 
+    <!-- Discord Login Modal -->
+    <div id="discord-login" class="discord-login-modal">
+        <div class="modal-overlay" onclick="closeDiscordLogin()"></div>
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeDiscordLogin()">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <!-- Login Area -->
+            <div id="login-area" class="login-section">
+                <div class="login-header">
+                    <i class="fab fa-discord"></i>
+                    <h2>Bem-vindo ao VEditor!</h2>
+                    <p>Faça login com sua conta Discord para continuar</p>
+                </div>
+
+                <a href="https://discord.com/oauth2/authorize?client_id=1506175869687828500&response_type=token&redirect_uri=https%3A%2F%2Fvetscy.github.io%2FVEditor%2F&scope=identify" id="login-btn" class="discord-login-btn" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-discord"></i>
+                    <span>Entrar com Discord</span>
+                </a>
+                
+                <div class="login-info">
+                    <p>Por que fazer login?</p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Acompanhe suas comissões</li>
+                        <li><i class="fas fa-check"></i> Acesse seu perfil personalizado</li>
+                        <li><i class="fas fa-check"></i> Receba notificações de atualizações</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Profile Area -->
+            <div id="profile-area" class="profile-section" style="display: none;">
+                <div class="profile-header">
+                    <img id="avatar" src="" alt="Avatar do Discord" class="profile-avatar">
+                    <div class="profile-info">
+                        <h2>Bem-vindo, <span id="username"></span>!</h2>
+                        <p id="user-id" class="user-id"></p>
+                    </div>
+                </div>
+
+                <div class="profile-actions">
+                    <a href="comissoes.html" class="btn btn-gradient" onclick="closeDiscordLogin()">
+                        <i class="fas fa-star"></i> Ver Comissões
+                    </a>
+                    <a href="portfolio.html" class="btn btn-outline" onclick="closeDiscordLogin()">
+                        <i class="fas fa-play"></i> Ver Portfólio
+                    </a>
+                </div>
+
+                <button id="logout-btn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="comissoes-script.js"></script>
+    <script src="home-script.js"></script>
 </body>
 </html>

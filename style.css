@@ -4,7 +4,7 @@
     --primary-light: #c77dff;
     --primary-dark: #5a189a;
     --accent: #e0aaff;
-    --video-accent: #ff6b9d;
+    --video-accent: #c77dff;
     --text-primary: #ffffff;
     --text-secondary: #c0c0c0;
     --bg-dark: #0a0014;
@@ -156,7 +156,7 @@ body {
 .nav-cta {
     width: 36px;
     height: 36px;
-    background: linear-gradient(135deg, var(--video-accent) 0%, #ff4b8d 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -165,13 +165,13 @@ body {
     color: var(--text-primary);
     font-size: 0.9rem;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+    box-shadow: 0 4px 15px rgba(157, 78, 221, 0.3);
     flex-shrink: 0;
 }
 
 .nav-cta:hover {
     transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 6px 20px rgba(255, 107, 157, 0.5);
+    box-shadow: 0 6px 20px rgba(157, 78, 221, 0.5);
 }
 
 @media (max-width: 600px) {
@@ -205,7 +205,7 @@ body {
     position: absolute;
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(255, 107, 157, 0.15) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(157, 78, 221, 0.15) 0%, transparent 70%);
     top: -200px;
     right: 10%;
     border-radius: 50%;
@@ -278,9 +278,9 @@ body {
 }
 
 .btn-gradient {
-    background: linear-gradient(135deg, var(--video-accent) 0%, #ff4b8d 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
     color: var(--text-primary);
-    box-shadow: 0 8px 25px rgba(255, 107, 157, 0.3);
+    box-shadow: 0 8px 25px rgba(157, 78, 221, 0.3);
 }
 
 .btn-gradient:hover {
@@ -314,7 +314,7 @@ body {
 /* ===== PORTFOLIO SECTION ===== */
 .portfolio-section {
     padding: 100px 60px;
-    background: linear-gradient(180deg, transparent 0%, rgba(255, 107, 157, 0.05) 100%);
+    background: linear-gradient(180deg, transparent 0%, rgba(157, 78, 221, 0.05) 100%);
     position: relative;
     z-index: 1;
 }
@@ -340,8 +340,8 @@ body {
     margin: 0 auto;
     border-radius: 20px;
     overflow: hidden;
-    border: 1px solid rgba(255, 107, 157, 0.2);
-    box-shadow: 0 20px 60px rgba(255, 107, 157, 0.1);
+    border: 1px solid rgba(157, 78, 221, 0.2);
+    box-shadow: 0 20px 60px rgba(157, 78, 221, 0.1);
 }
 
 .custom-player {
@@ -454,7 +454,7 @@ body {
 /* ===== NEWS SECTION ===== */
 .news {
     padding: 100px 60px;
-    background: linear-gradient(180deg, rgba(255, 107, 157, 0.05) 0%, transparent 100%);
+    background: linear-gradient(180deg, rgba(157, 78, 221, 0.05) 0%, transparent 100%);
     position: relative;
     z-index: 1;
 }
@@ -491,8 +491,8 @@ body {
 }
 
 .news-card {
-    background: linear-gradient(135deg, rgba(255, 107, 157, 0.12) 0%, rgba(90, 25, 154, 0.06) 100%);
-    border: 1px solid rgba(255, 107, 157, 0.25);
+    background: linear-gradient(135deg, rgba(157, 78, 221, 0.12) 0%, rgba(90, 25, 154, 0.06) 100%);
+    border: 1px solid rgba(157, 78, 221, 0.25);
     border-radius: 15px;
     padding: 35px;
     transition: all 0.4s ease;
@@ -515,10 +515,10 @@ body {
 }
 
 .news-card:hover {
-    border-color: rgba(255, 107, 157, 0.5);
+    border-color: rgba(157, 78, 221, 0.5);
     transform: translateY(-10px);
-    background: linear-gradient(135deg, rgba(255, 107, 157, 0.18) 0%, rgba(90, 25, 154, 0.1) 100%);
-    box-shadow: 0 20px 50px rgba(255, 107, 157, 0.15);
+    background: linear-gradient(135deg, rgba(157, 78, 221, 0.18) 0%, rgba(90, 25, 154, 0.1) 100%);
+    box-shadow: 0 20px 50px rgba(157, 78, 221, 0.15);
 }
 
 .news-card:hover::before {
@@ -593,9 +593,9 @@ body {
 }
 
 .contact-btn {
-    background: linear-gradient(135deg, rgba(255, 107, 157, 0.15), rgba(255, 107, 157, 0.08));
-    border: 1px solid rgba(255, 107, 157, 0.3);
-    color: var(--video-accent);
+    background: linear-gradient(135deg, rgba(157, 78, 221, 0.15), rgba(157, 78, 221, 0.08));
+    border: 1px solid rgba(157, 78, 221, 0.3);
+    color: var(--accent);
     padding: 12px 28px;
     border-radius: 25px;
     text-decoration: none;
@@ -608,11 +608,11 @@ body {
 }
 
 .contact-btn:hover {
-    background: linear-gradient(135deg, var(--video-accent) 0%, #ff4b8d 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
     color: var(--text-primary);
-    border-color: var(--video-accent);
+    border-color: var(--primary);
     transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+    box-shadow: 0 10px 30px rgba(157, 78, 221, 0.3);
 }
 
 .contact-btn.disabled {
@@ -787,6 +787,7 @@ body {
     box-shadow: 0 20px 60px rgba(157, 78, 221, 0.3);
     animation: slideUp 0.3s ease;
     z-index: 5001;
+    pointer-events: auto;
 }
 
 .modal-close {
@@ -837,10 +838,10 @@ body {
     align-items: center;
     justify-content: center;
     gap: 12px;
-    background: #5865F2;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
     color: white;
-    padding: 14px 32px;
-    border-radius: 8px;
+    padding: 13px 28px;
+    border-radius: 25px;
     border: none;
     font-size: 16px;
     font-weight: 600;
@@ -849,12 +850,20 @@ body {
     margin-bottom: 30px;
     text-decoration: none;
     width: 100%;
+    pointer-events: auto;
+    z-index: 5002;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .discord-login-btn:hover {
-    background: #4752C4;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(88, 101, 242, 0.3);
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(157, 78, 221, 0.5);
+}
+
+.discord-login-btn:active {
+    transform: translateY(0);
 }
 
 .discord-login-btn i {
@@ -866,7 +875,7 @@ body {
     background: rgba(157, 78, 221, 0.1);
     border-left: 4px solid var(--primary);
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 15px;
 }
 
 .login-info p {
@@ -941,8 +950,8 @@ body {
 
 .btn {
     flex: 1;
-    padding: 12px 20px;
-    border-radius: 8px;
+    padding: 13px 28px;
+    border-radius: 25px;
     border: none;
     font-size: 14px;
     font-weight: 600;
@@ -953,6 +962,8 @@ body {
     align-items: center;
     justify-content: center;
     gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .btn-gradient {
@@ -981,8 +992,8 @@ body {
     background: rgba(255, 0, 0, 0.1);
     border: 1px solid rgba(255, 0, 0, 0.3);
     color: #ff6b6b;
-    padding: 12px 20px;
-    border-radius: 8px;
+    padding: 13px 28px;
+    border-radius: 25px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -991,6 +1002,8 @@ body {
     align-items: center;
     justify-content: center;
     gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .logout-btn:hover {
