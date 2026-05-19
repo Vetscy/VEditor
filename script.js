@@ -102,3 +102,124 @@ function filterVideos(type) {
         }
     });
 }
+
+// ============ Discord Login Functions ============
+function openDiscordLogin() {
+    const modal = document.getElementById('discord-login');
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeDiscordLogin() {
+    const modal = document.getElementById('discord-login');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// Discord OAuth Handling
+window.addEventListener('load', () => {
+    // Verificar se o usuário já tem um token salvado
+    const savedToken = localStorage.getItem('discord_access_token');
+    const savedUser = localStorage.getItem('discord_user');
+
+    if (savedToken && savedUser) {
+        displayUserProfile(JSON.parse(savedUser));
+    } else {
+        // Verificar se o Discord retornou um token na URL
+        const fragment = new URLSearchParams(window.location.hash.slice(1));
+        const accessToken = fragment.get('access_token');
+        const tokenType = fragment.get('token_type');
+
+        if (accessToken) {
+            // Salvar token e buscar dados do usuário
+            localStorage.setItem('discord_access_token', accessToken);
+            localStorage.setItem('discord_token_type', tokenType || 'Bearer');
+
+            // Buscar informações do usuário
+            fetch('https://discord.com/api/users/@me', {
+                headers: {
+                    authorization: `${tokenType || 'Bearer'} ${accessToken}`
+                }
+            })
+            .then(result => result.json())
+            .then(response => {
+                if (response.id) {
+                    // Salvar dados do usuário
+                    localStorage.setItem('discord_user', JSON.stringify(response));
+                    displayUserProfile(response);
+                    // Abrir modal automaticamente
+                    openDiscordLogin();
+                    // Limpar URL
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                } else {
+                    console.error('Erro ao buscar dados do usuário:', response);
+                }
+            })
+            .catch(error => {
+                console.error('Erro na autenticação Discord:', error);
+            });
+        }
+    }
+});
+
+function displayUserProfile(userData) {
+    // Mostrar seção de perfil
+    document.getElementById('login-area').style.display = 'none';
+    document.getElementById('profile-area').style.display = 'block';
+
+    // Preencher dados do usuário
+    document.getElementById('username').innerText = userData.username || 'Usuário';
+    document.getElementById('user-id').innerText = `ID: ${userData.id}`;
+
+    // Construir URL da imagem de perfil
+    if (userData.avatar) {
+        const avatarUrl = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
+        document.getElementById('avatar').src = avatarUrl;
+    }
+}
+
+// Logout
+document.addEventListener('DOMContentLoaded', () => {
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            // Limpar localStorage
+            localStorage.removeItem('discord_access_token');
+            localStorage.removeItem('discord_token_type');
+            localStorage.removeItem('discord_user');
+
+            // Mostrar login novamente
+            document.getElementById('login-area').style.display = 'block';
+            document.getElementById('profile-area').style.display = 'none';
+
+            // Mostrar mensagem de logout
+            showNotification('Você foi desconectado!', 'success');
+        });
+    }
+});
+
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerText = message;
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#4CAF50' : '#2196F3'};
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        z-index: 10000;
+        font-weight: 500;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        animation: slideIn 0.3s ease;
+    `;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
