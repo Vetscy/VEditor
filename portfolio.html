@@ -113,7 +113,7 @@
     </section>
 
     <!-- Discord Login Modal -->
-    <div id="discord-login" class="discord-login-modal">
+    <div id="discord-login" class="discord-login-modal" style="display: none; visibility: hidden;">
         <div class="modal-overlay" onclick="closeDiscordLogin()"></div>
         <div class="modal-content">
             <button class="modal-close" onclick="closeDiscordLogin()">
@@ -176,8 +176,8 @@
     </div>
 
     <!-- Modal de Perfil Simplificado -->
-    <div id="profile-modal-overlay" class="modal-overlay-profile" style="display: none;" onclick="closeProfileModal()"></div>
-    <div id="profile-modal" class="modal" style="display: none;">
+    <div id="profile-modal-overlay" class="modal-overlay-profile" style="display: none; visibility: hidden;" onclick="closeProfileModal()"></div>
+    <div id="profile-modal" class="modal" style="display: none; visibility: hidden;">
         <div class="modal-content simple-profile-modal">
             <button class="modal-close" onclick="closeProfileModal()" type="button">&times;</button>
             

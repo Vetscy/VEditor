@@ -6,6 +6,26 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Garantir que modais estão fechados ao carregar a página
+    const profileModal = document.getElementById('profile-modal');
+    const profileOverlay = document.getElementById('profile-modal-overlay');
+    const discordLogin = document.getElementById('discord-login');
+    
+    if (profileModal) profileModal.style.display = 'none';
+    if (profileOverlay) profileOverlay.style.display = 'none';
+    if (discordLogin) discordLogin.style.display = 'none';
+    
+    document.body.style.overflow = 'auto';
+    
+    // Fechar modal ao clicar em links internos
+    document.querySelectorAll('a[href*=".html"]').forEach(link => {
+        if (!link.hasAttribute('onclick') || !link.getAttribute('onclick').includes('closeProfileModal')) {
+            link.addEventListener('click', () => {
+                closeProfileModal();
+            });
+        }
+    });
+    
     // Animação suave do scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -68,6 +88,7 @@ function closeDiscordLogin() {
     const modal = document.getElementById('discord-login');
     if (modal) {
         modal.style.display = 'none';
+        modal.style.visibility = 'hidden';
         document.body.style.overflow = 'auto';
     }
 }
@@ -433,26 +454,81 @@ async function carregarProdutosSupabase(discordId, modalElement) {
 
 // Função para abrir perfil em modal
 function abrirMeuPerfil() {
-    const discordUser = JSON.parse(localStorage.getItem('discord_user') || '{}');
-    if (discordUser.id) {
-        closeDiscordLogin();
-        document.getElementById('simple-profile-avatar').src = `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png`;
-        document.getElementById('simple-profile-name').textContent = `Bem-vindo, ${discordUser.username}!`;
-        document.getElementById('simple-profile-id').textContent = `ID: ${discordUser.id}`;
-        const modal = document.getElementById('profile-modal');
-        const overlay = document.getElementById('profile-modal-overlay');
-        if (modal) modal.style.display = 'flex';
-        if (overlay) overlay.style.display = 'block';
-        document.body.style.overflow = 'hidden';
+    try {
+        const discordUser = JSON.parse(localStorage.getItem('discord_user') || '{}');
+        if (discordUser.id) {
+            closeDiscordLogin();
+            
+            const avatar = document.getElementById('simple-profile-avatar');
+            const name = document.getElementById('simple-profile-name');
+            const id = document.getElementById('simple-profile-id');
+            
+            if (avatar) avatar.src = `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png`;
+            if (name) name.textContent = `Bem-vindo, ${discordUser.username}!`;
+            if (id) id.textContent = `ID: ${discordUser.id}`;
+            
+            const modal = document.getElementById('profile-modal');
+            const overlay = document.getElementById('profile-modal-overlay');
+            
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.style.visibility = 'visible';
+            }
+            if (overlay) {
+                overlay.style.display = 'block';
+                overlay.style.visibility = 'visible';
+            }
+            
+            document.body.style.overflow = 'hidden';
+        }
+    } catch (e) {
+        console.error('Erro ao abrir perfil:', e);
     }
 }
 
 function closeProfileModal() {
-    const modal = document.getElementById('profile-modal');
-    const overlay = document.getElementById('profile-modal-overlay');
-    if (modal) modal.style.display = 'none';
-    if (overlay) overlay.style.display = 'none';
-    document.body.style.overflow = 'auto';
+    try {
+        const modal = document.getElementById('profile-modal');
+        const overlay = document.getElementById('profile-modal-overlay');
+        
+        if (modal) {
+            modal.style.display = 'none';
+            modal.style.visibility = 'hidden';
+        }
+        if (overlay) {
+            overlay.style.display = 'none';
+            overlay.style.visibility = 'hidden';
+        }
+        
+        document.body.style.overflow = 'auto';
+    } catch (e) {
+        console.error('Erro ao fechar modal:', e);
+    }
+}
+
+function handleLogout() {
+    try {
+        localStorage.removeItem('discord_user');
+        localStorage.removeItem('discord_access_token');
+        localStorage.removeItem('discord_token');
+        
+        // Fechar modal explicitamente
+        closeProfileModal();
+        
+        // Resetar overflow
+        document.body.style.overflow = 'auto';
+        
+        // Fechar login discord também
+        closeDiscordLogin();
+        
+        // Aguardar um pouco e então recarregar
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 300);
+    } catch (e) {
+        console.error('Erro ao fazer logout:', e);
+        window.location.href = 'index.html';
+    }
 }
 
 function openMyModels() {
