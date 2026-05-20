@@ -6,14 +6,12 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Garantir que modais estão fechados ao carregar a página
+    // Garantir que modais de perfil estão fechados ao carregar a página
     const profileModal = document.getElementById('profile-modal');
     const profileOverlay = document.getElementById('profile-modal-overlay');
-    const discordLogin = document.getElementById('discord-login');
     
     if (profileModal) profileModal.style.display = 'none';
     if (profileOverlay) profileOverlay.style.display = 'none';
-    if (discordLogin) discordLogin.style.display = 'none';
     
     document.body.style.overflow = 'auto';
     
@@ -80,6 +78,7 @@ function openDiscordLogin() {
     const modal = document.getElementById('discord-login');
     if (modal) {
         modal.style.display = 'block';
+        modal.style.visibility = 'visible';
         document.body.style.overflow = 'hidden';
     }
 }
@@ -124,8 +123,8 @@ function checkDiscordLogin() {
                     localStorage.setItem('discord_user', JSON.stringify(response));
                     localStorage.setItem('discord_id', response.id);
                     displayUserProfile(response);
-                    // Abrir modal automaticamente
-                    openDiscordLogin();
+                    // Abrir modal de perfil ao login bem-sucedido
+                    abrirMeuPerfil();
                     // Limpar URL
                     window.history.replaceState({}, document.title, window.location.pathname);
                 } else {
@@ -136,6 +135,9 @@ function checkDiscordLogin() {
             .catch(error => {
                 console.error('Erro na autenticação Discord:', error);
             });
+        } else {
+            // Sem token salvo e sem retorno de autenticação - mostrar modal de login
+            openDiscordLogin();
         }
     }
 }
