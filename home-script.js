@@ -439,13 +439,19 @@ function abrirMeuPerfil() {
         document.getElementById('simple-profile-avatar').src = `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png`;
         document.getElementById('simple-profile-name').textContent = `Bem-vindo, ${discordUser.username}!`;
         document.getElementById('simple-profile-id').textContent = `ID: ${discordUser.id}`;
-        document.getElementById('profile-modal').style.display = 'flex';
+        const modal = document.getElementById('profile-modal');
+        const overlay = document.getElementById('profile-modal-overlay');
+        if (modal) modal.style.display = 'flex';
+        if (overlay) overlay.style.display = 'block';
         document.body.style.overflow = 'hidden';
     }
 }
 
 function closeProfileModal() {
-    document.getElementById('profile-modal').style.display = 'none';
+    const modal = document.getElementById('profile-modal');
+    const overlay = document.getElementById('profile-modal-overlay');
+    if (modal) modal.style.display = 'none';
+    if (overlay) overlay.style.display = 'none';
     document.body.style.overflow = 'auto';
 }
 

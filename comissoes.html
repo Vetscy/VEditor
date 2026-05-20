@@ -297,9 +297,10 @@
     </div>
 
     <!-- Modal de Perfil Simplificado -->
+    <div id="profile-modal-overlay" class="modal-overlay-profile" style="display: none;" onclick="closeProfileModal()"></div>
     <div id="profile-modal" class="modal" style="display: none;">
         <div class="modal-content simple-profile-modal">
-            <span class="modal-close" onclick="closeProfileModal()">&times;</span>
+            <button class="modal-close" onclick="closeProfileModal()" type="button">&times;</button>
             
             <div class="simple-profile-header">
                 <img id="simple-profile-avatar" src="" alt="Avatar" class="simple-profile-avatar">
@@ -310,7 +311,7 @@
             </div>
 
             <div class="simple-profile-actions">
-                <button class="btn-simple" id="meus-modelos-btn" onclick="openMyModels()">
+                <button class="btn-simple" id="meus-modelos-btn" onclick="openMyModels()" type="button">
                     <i class="fas fa-star"></i> Meus Modelos
                 </button>
                 <a href="comissoes.html" class="btn-simple" onclick="closeProfileModal()">
@@ -319,7 +320,7 @@
                 <a href="portfolio.html" class="btn-simple" onclick="closeProfileModal()">
                     <i class="fas fa-play"></i> Ver Portfólio
                 </a>
-                <button class="btn-simple logout" onclick="handleLogout()">
+                <button class="btn-simple logout" onclick="handleLogout()" type="button">
                     <i class="fas fa-sign-out-alt"></i> Sair
                 </button>
             </div>
@@ -327,6 +328,17 @@
     </div>
 
     <style id="simple-profile-modal-styles">
+        .modal-overlay-profile {
+            position: fixed !important;
+            z-index: 9999 !important;
+            left: 0 !important;
+            top: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background-color: rgba(0, 0, 0, 0.7) !important;
+            cursor: pointer !important;
+        }
+
         .modal {
             position: fixed !important;
             z-index: 10000 !important;
@@ -334,7 +346,7 @@
             top: 0 !important;
             width: 100% !important;
             height: 100% !important;
-            background-color: rgba(0, 0, 0, 0.8) !important;
+            background-color: transparent !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
