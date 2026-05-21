@@ -98,7 +98,10 @@ function checkDiscordLogin() {
     const savedUser = localStorage.getItem('discord_user');
 
     if (savedToken && savedUser) {
+        // Usuário já estava logado - mostrar perfil
         displayUserProfile(JSON.parse(savedUser));
+        // Abrir modal de perfil se o usuário voltou ao site já logado
+        setTimeout(() => abrirMeuPerfil(), 100);
     } else {
         // Verificar se o Discord retornou um token na URL
         const fragment = new URLSearchParams(window.location.hash.slice(1));
