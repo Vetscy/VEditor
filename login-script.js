@@ -33,10 +33,10 @@ function showLogin() {
     document.getElementById('profile-area').style.display = 'none';
 }
 
-// Função para mostrar a área de perfil
+// Função para mostrar a área de perfil (preenche dados, mas NÃO abre o modal automaticamente)
 function showProfile(accessToken, tokenType) {
-    document.getElementById('login-area').style.display = 'none';
-    document.getElementById('profile-area').style.display = 'block';
+    const loginArea = document.getElementById('login-area');
+    if (loginArea) loginArea.style.display = 'none';
 
     // Busca as informações do usuário no Discord
     fetch('https://discord.com/api/users/@me', {

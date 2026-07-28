@@ -98,10 +98,8 @@ function checkDiscordLogin() {
     const savedUser = localStorage.getItem('discord_user');
 
     if (savedToken && savedUser) {
-        // Usuário já estava logado - mostrar perfil
+        // Usuário já estava logado - mostrar perfil (apenas atualizar navbar, não abrir modal)
         displayUserProfile(JSON.parse(savedUser));
-        // Abrir modal de perfil se o usuário voltou ao site já logado
-        setTimeout(() => abrirMeuPerfil(), 100);
     } else {
         // Verificar se o Discord retornou um token na URL
         const fragment = new URLSearchParams(window.location.hash.slice(1));
@@ -126,8 +124,7 @@ function checkDiscordLogin() {
                     localStorage.setItem('discord_user', JSON.stringify(response));
                     localStorage.setItem('discord_id', response.id);
                     displayUserProfile(response);
-                    // Abrir modal de perfil ao login bem-sucedido
-                    abrirMeuPerfil();
+                    // Não abrir modal automaticamente — o usuário deve abrir clicando no avatar
                     // Limpar URL
                     window.history.replaceState({}, document.title, window.location.pathname);
                 } else {
@@ -148,16 +145,11 @@ function checkDiscordLogin() {
 function displayUserProfile(userData) {
     console.log('Exibindo perfil do usuário:', userData);
 
-    // Mostrar no modal
+    // Não abrir modal automaticamente — apenas preencher dados e mostrar avatar no navbar
     const loginArea = document.getElementById('login-area');
-    const profileArea = document.getElementById('profile-area');
-    
-    if (loginArea && profileArea) {
-        loginArea.style.display = 'none';
-        profileArea.style.display = 'block';
-    }
+    if (loginArea) loginArea.style.display = 'none';
 
-    // Preencher dados no modal
+    // Preencher dados do usuário no modal (quando for aberto)
     const usernameSpan = document.getElementById('username');
     const userIdP = document.getElementById('user-id');
     const avatarImg = document.getElementById('avatar');
@@ -171,7 +163,7 @@ function displayUserProfile(userData) {
         avatarImg.src = avatarUrl;
     }
 
-    // MOSTRAR NO NAVBAR - Nome e Avatar
+    // MOSTRAR NO NAVBAR - Nome e Avatar (reduzido)
     const discordNavBtn = document.getElementById('discord-nav-btn');
     const userProfileNav = document.getElementById('user-profile-nav');
     const navAvatar = document.getElementById('nav-avatar');
@@ -188,7 +180,7 @@ function displayUserProfile(userData) {
         userProfileNav.onclick = () => abrirMeuPerfil();
     }
 
-    // Mostrar botão "Meu Perfil" no modal
+    // Mostrar botão "Meu Perfil" no modal (quando o modal for aberto)
     const openProfileBtn = document.getElementById('open-profile-btn');
     if (openProfileBtn) {
         openProfileBtn.style.display = 'flex';

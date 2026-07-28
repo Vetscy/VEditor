@@ -142,13 +142,12 @@ window.addEventListener('load', () => {
                 }
             })
             .then(result => result.json())
-            .then(response => {
+.then(response => {
                 if (response.id) {
                     // Salvar dados do usuário
                     localStorage.setItem('discord_user', JSON.stringify(response));
                     displayUserProfile(response);
-                    // Abrir modal automaticamente
-                    openDiscordLogin();
+                    // Não abrir modal automaticamente — o menu/ modal deve abrir quando o usuário clicar na foto
                     // Limpar URL
                     window.history.replaceState({}, document.title, window.location.pathname);
                 } else {
@@ -163,18 +162,45 @@ window.addEventListener('load', () => {
 });
 
 function displayUserProfile(userData) {
-    // Mostrar seção de perfil
-    document.getElementById('login-area').style.display = 'none';
-    document.getElementById('profile-area').style.display = 'block';
+    // Esconder área de login dentro do modal se existir
+    const loginArea = document.getElementById('login-area');
+    if (loginArea) loginArea.style.display = 'none';
 
-    // Preencher dados do usuário
-    document.getElementById('username').innerText = userData.username || 'Usuário';
-    document.getElementById('user-id').innerText = `ID: ${userData.id}`;
+    // NÃO mostrar automaticamente a área de perfil/modal. Apenas preencher dados e mostrar o avatar no navbar.
+    // Preencher dados do usuário no modal (quando aberto)
+    const usernameEl = document.getElementById('username');
+    const userIdEl = document.getElementById('user-id');
+    const avatarEl = document.getElementById('avatar');
 
-    // Construir URL da imagem de perfil
-    if (userData.avatar) {
+    if (usernameEl) usernameEl.innerText = userData.username || 'Usuário';
+    if (userIdEl) userIdEl.innerText = `ID: ${userData.id}`;
+    if (userData.avatar && avatarEl) {
         const avatarUrl = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
-        document.getElementById('avatar').src = avatarUrl;
+        avatarEl.src = avatarUrl;
+    }
+
+    // Mostrar avatar/nome reduzidos no navbar e associar clique para abrir o modal
+    const discordNavBtn = document.getElementById('discord-nav-btn');
+    const userProfileNav = document.getElementById('user-profile-nav');
+    const navAvatar = document.getElementById('nav-avatar');
+    const navUsername = document.getElementById('nav-username');
+
+    if (discordNavBtn) discordNavBtn.style.display = 'none';
+    if (userProfileNav) {
+        userProfileNav.style.display = 'flex';
+        if (userData.avatar && navAvatar) {
+            navAvatar.src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
+        }
+        if (navUsername) navUsername.innerText = userData.username || 'Usuário';
+        // Ao clicar no avatar reduzido, abre o modal com o perfil (função deve existir no escopo da página)
+        userProfileNav.onclick = () => {
+            if (typeof abrirMeuPerfil === 'function') {
+                abrirMeuPerfil();
+            } else if (typeof openDiscordLogin === 'function') {
+                // fallback para abrir modal antigo
+                openDiscordLogin();
+            }
+        };
     }
 }
 
