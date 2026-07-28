@@ -249,3 +249,95 @@ function showNotification(message, type = 'info') {
         setTimeout(() => notification.remove(), 300);
     }, 3000);
 }
+
+// Guard: impedir abertura automática do modal de perfil/login
+// Força esconder modais no carregamento e bloqueia chamadas automáticas a abrirMeuPerfil/openDiscordLogin
+(function preventAutoProfileModal() {
+    function hideAllProfileModals() {
+        const ids = ['discord-login','profile-modal','profile-modal-overlay','profile-area'];
+        ids.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                try {
+                    el.style.display = 'none';
+                    el.style.visibility = 'hidden';
+                } catch (e) {}
+            }
+        });
+    }
+
+    function guard() {
+        hideAllProfileModals();
+
+        // Save originals if exist
+        const originalAbrir = window.abrirMeuPerfil;
+        const originalOpen = window.openDiscordLogin;
+
+        // Replace global functions with no-op to block automatic calls
+        if (typeof originalAbrir === 'function') {
+            window.abrirMeuPerfil = function() {
+                console.warn('abrirMeuPerfil blocked to prevent auto-opening. Use the profile button to open.');
+            };
+        }
+        if (typeof originalOpen === 'function') {
+            window.openDiscordLogin = function() {
+                console.warn('openDiscordLogin blocked to prevent auto-opening. Use the login button to open.');
+            };
+        }
+
+        // Ensure the navbar buttons open the modals when clicked by using the saved originals or safe fallback
+        const discordBtn = document.getElementById('discord-nav-btn');
+        if (discordBtn) {
+            discordBtn.onclick = (e) => {
+                e && e.preventDefault && e.preventDefault();
+                if (typeof originalOpen === 'function') {
+                    // call original to keep existing behavior
+                    originalOpen();
+                } else {
+                    const modal = document.getElementById('discord-login');
+                    if (modal) {
+                        modal.style.display = 'flex';
+                        modal.style.visibility = 'visible';
+                        document.body.style.overflow = 'hidden';
+                    }
+                }
+            };
+        }
+
+        const userProfileNav = document.getElementById('user-profile-nav');
+        if (userProfileNav) {
+            userProfileNav.onclick = (e) => {
+                e && e.preventDefault && e.preventDefault();
+                if (typeof originalAbrir === 'function') {
+                    originalAbrir();
+                } else {
+                    // fallback: show simple profile modal directly
+                    const modal = document.getElementById('profile-modal');
+                    const overlay = document.getElementById('profile-modal-overlay');
+                    if (modal) {
+                        modal.style.display = 'flex';
+                        modal.style.visibility = 'visible';
+                    }
+                    if (overlay) {
+                        overlay.style.display = 'block';
+                        overlay.style.visibility = 'visible';
+                    }
+                    document.body.style.overflow = 'hidden';
+                }
+            };
+        }
+    }
+
+    // Run guard after load — try immediate and with short delays to catch different load orders
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        setTimeout(guard, 0);
+        setTimeout(guard, 200);
+        setTimeout(guard, 1000);
+    } else {
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(guard, 0);
+            setTimeout(guard, 200);
+            setTimeout(guard, 1000);
+        });
+    }
+})();
