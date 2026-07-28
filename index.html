@@ -468,30 +468,8 @@
     <!-- SCRIPT ADICIONADO PARA CONTROLAR O POP-UP DO DISCORD -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Checa se o usuário já clicou no "X" do pop-up
-            const jaFechouModal = localStorage.getItem('modalLoginFechado') === 'true';
-            
-            // 2. Checa se o usuário está logado usando as chaves do Supabase no localStorage
-            // Essa lógica procura por qualquer token de autenticação salvo pelo Supabase
-            let usuarioLogado = false;
-            for (let i = 0; i < localStorage.length; i++) {
-                if (localStorage.key(i).includes('supabase')) {
-                    usuarioLogado = true;
-                    break;
-                }
-            }
-
-            const modal = document.getElementById('discord-login');
-
-            // 3. Se ele NÃO estiver logado e NUNCA tiver fechado o modal, aparece a janela
-            if (!usuarioLogado && !jaFechouModal) {
-                // Aguarda 1 segundinho para aparecer suave
-                setTimeout(() => {
-                    if (modal) {
-                        modal.style.display = 'flex'; 
-                    }
-                }, 1000);
-            }
+            // Não abrir o modal de login automaticamente ao carregar a página.
+            // O usuário deve clicar no botão de login (ícone do Discord) para abrir o modal.
         });
 
         // Função chamada quando a pessoa clica no "X" ou em algum botão de fechar do modal

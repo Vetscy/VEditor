@@ -136,8 +136,9 @@ function checkDiscordLogin() {
                 console.error('Erro na autenticação Discord:', error);
             });
         } else {
-            // Sem token salvo e sem retorno de autenticação - mostrar modal de login
-            openDiscordLogin();
+            // Sem token salvo e sem retorno de autenticação - não abrir modal automaticamente
+            // O usuário deve clicar no botão de login (discord-nav-btn) para abrir o modal.
+            // Mantém o botão de login visível.
         }
     }
 }
