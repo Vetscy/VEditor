@@ -1,16 +1,18 @@
 // Proteção contra cópia casual; não substitui controle de acesso no servidor.
 (function() {
-    document.addEventListener('contextmenu', (event) => {
+    window.addEventListener('contextmenu', (event) => {
         event.preventDefault();
-    });
+        event.stopPropagation();
+    }, true);
 
-    document.addEventListener('dragstart', (event) => {
+    window.addEventListener('dragstart', (event) => {
         if (event.target instanceof Element && event.target.closest('img, video')) {
             event.preventDefault();
+            event.stopPropagation();
         }
-    });
+    }, true);
 
-    document.addEventListener('keydown', (event) => {
+    window.addEventListener('keydown', (event) => {
         const key = event.key.toLowerCase();
         const blockedShortcut =
             event.key === 'F12' ||
@@ -21,5 +23,5 @@
             event.preventDefault();
             event.stopPropagation();
         }
-    });
+    }, true);
 })();
