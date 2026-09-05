@@ -33,66 +33,36 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-const NOVOS_TRABALHOS_STORAGE_KEY = 'veditor-novos-trabalhos-v2';
 const NOVO_TRABALHO_DURACAO_MS = 24 * 60 * 60 * 1000;
 
 function configurarMarcadoresDeNovidade() {
     const trabalhos = Array.from(document.querySelectorAll('.portfolio-item'));
     if (trabalhos.length === 0) return;
 
-    const estado = lerEstadoDosTrabalhos();
-    const idsAtuais = new Set(trabalhos.map(obterIdDoTrabalho));
-    const primeiroAcesso = Object.keys(estado).length === 0;
     const agora = Date.now();
 
-    trabalhos.forEach(trabalho => {
-        const id = obterIdDoTrabalho(trabalho);
-        const dataInformada = Date.parse(trabalho.dataset.addedAt || '');
+    trabalhos.forEach(trabalho => atualizarMarcadorDeNovidade(
+        trabalho,
+        Date.parse(trabalho.dataset.addedAt || ''),
+        agora
+    ));
 
-        if (Number.isFinite(dataInformada)) {
-            estado[id] = dataInformada;
-        } else if (!(id in estado) && !primeiroAcesso) {
-            estado[id] = agora;
-        } else if (!(id in estado)) {
-            // A primeira carga apenas cria a linha de base dos trabalhos antigos.
-            estado[id] = 0;
-        }
-
-        atualizarMarcadorDeNovidade(trabalho, estado[id], agora);
-    });
-
-    Object.keys(estado).forEach(id => {
-        if (!idsAtuais.has(id)) {
-            delete estado[id];
-        }
-    });
-
-    salvarEstadoDosTrabalhos(estado);
-    window.setInterval(() => atualizarMarcadoresAtivos(estado), 60 * 1000);
+    // Remove estados gravados pelas versões anteriores, que podiam marcar cards antigos.
+    localStorage.removeItem('veditor-novos-trabalhos-v1');
+    localStorage.removeItem('veditor-novos-trabalhos-v2');
+    window.setInterval(atualizarMarcadoresAtivos, 60 * 1000);
 }
 
-function obterIdDoTrabalho(trabalho) {
-    if (trabalho.dataset.workId) return trabalho.dataset.workId;
-
-    const imagem = trabalho.querySelector('.portfolio-image')?.getAttribute('src') || '';
-    const titulo = trabalho.querySelector('h3')?.textContent.trim() || '';
-    return `${imagem}|${titulo}`;
-}
-
-function atualizarMarcadoresAtivos(estado) {
+function atualizarMarcadoresAtivos() {
     const agora = Date.now();
 
     document.querySelectorAll('.portfolio-item').forEach(trabalho => {
-        atualizarMarcadorDeNovidade(trabalho, estado[obterIdDoTrabalho(trabalho)], agora);
+        atualizarMarcadorDeNovidade(
+            trabalho,
+            Date.parse(trabalho.dataset.addedAt || ''),
+            agora
+        );
     });
-
-    Object.keys(estado).forEach(id => {
-        if (estado[id] > 0 && agora - estado[id] >= NOVO_TRABALHO_DURACAO_MS) {
-            delete estado[id];
-        }
-    });
-
-    salvarEstadoDosTrabalhos(estado);
 }
 
 function atualizarMarcadorDeNovidade(trabalho, adicionadoEm, agora) {
@@ -123,26 +93,6 @@ function formatarTempoRestante(milissegundos) {
     if (horas >= 24) return '1 dia';
     if (horas === 1) return '1 hora';
     return `${horas} horas`;
-}
-
-function lerEstadoDosTrabalhos() {
-    try {
-        const estadoSalvo = JSON.parse(localStorage.getItem(NOVOS_TRABALHOS_STORAGE_KEY) || '{}');
-        return estadoSalvo && typeof estadoSalvo === 'object' && !Array.isArray(estadoSalvo)
-            ? estadoSalvo
-            : {};
-    } catch (error) {
-        console.warn('Não foi possível ler o estado dos novos trabalhos:', error);
-        return {};
-    }
-}
-
-function salvarEstadoDosTrabalhos(estado) {
-    try {
-        localStorage.setItem(NOVOS_TRABALHOS_STORAGE_KEY, JSON.stringify(estado));
-    } catch (error) {
-        console.warn('Não foi possível salvar o estado dos novos trabalhos:', error);
-    }
 }
 
 function detectarPaisEConverteMoedas() {
