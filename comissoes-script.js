@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-const NOVOS_TRABALHOS_STORAGE_KEY = 'veditor-novos-trabalhos-v1';
+const NOVOS_TRABALHOS_STORAGE_KEY = 'veditor-novos-trabalhos-v2';
 const NOVO_TRABALHO_DURACAO_MS = 24 * 60 * 60 * 1000;
 
 function configurarMarcadoresDeNovidade() {
@@ -53,13 +53,16 @@ function configurarMarcadoresDeNovidade() {
             estado[id] = dataInformada;
         } else if (!(id in estado) && !primeiroAcesso) {
             estado[id] = agora;
+        } else if (!(id in estado)) {
+            // A primeira carga apenas cria a linha de base dos trabalhos antigos.
+            estado[id] = 0;
         }
 
         atualizarMarcadorDeNovidade(trabalho, estado[id], agora);
     });
 
     Object.keys(estado).forEach(id => {
-        if (!idsAtuais.has(id) || agora - estado[id] >= NOVO_TRABALHO_DURACAO_MS) {
+        if (!idsAtuais.has(id)) {
             delete estado[id];
         }
     });
@@ -84,7 +87,7 @@ function atualizarMarcadoresAtivos(estado) {
     });
 
     Object.keys(estado).forEach(id => {
-        if (agora - estado[id] >= NOVO_TRABALHO_DURACAO_MS) {
+        if (estado[id] > 0 && agora - estado[id] >= NOVO_TRABALHO_DURACAO_MS) {
             delete estado[id];
         }
     });
