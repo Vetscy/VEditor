@@ -28,7 +28,7 @@ html {
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #0a0014 0%, #1a0a2e 50%, #2d0a47 100%);
+    background: #0a0014;
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
@@ -874,3 +874,13 @@ img {
 }
 
 
+.portfolio-item img,
+.model-card img,
+.commission-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: center;
+}
