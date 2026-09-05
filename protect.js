@@ -1,26 +1,25 @@
-// Script de proteção do site - bloqueia apenas download de imagens
+// Proteção contra cópia casual; não substitui controle de acesso no servidor.
 (function() {
-    // Bloquear clique direito APENAS em imagens
-    document.addEventListener('contextmenu', (e) => {
-        if (e.target.tagName === 'IMG') {
-            e.preventDefault();
-            return false;
+    document.addEventListener('contextmenu', (event) => {
+        event.preventDefault();
+    });
+
+    document.addEventListener('dragstart', (event) => {
+        if (event.target instanceof Element && event.target.closest('img, video')) {
+            event.preventDefault();
         }
     });
 
-    // Bloquear drag and drop de imagens
-    document.addEventListener('dragstart', (e) => {
-        if (e.target.tagName === 'IMG') {
-            e.preventDefault();
-            return false;
-        }
-    });
+    document.addEventListener('keydown', (event) => {
+        const key = event.key.toLowerCase();
+        const blockedShortcut =
+            event.key === 'F12' ||
+            (event.ctrlKey && event.shiftKey && ['i', 'j', 'c'].includes(key)) ||
+            (event.ctrlKey && key === 'u');
 
-    // Remover "Save image as" do contexto de imagens
-    document.querySelectorAll('img').forEach(img => {
-        img.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-            return false;
-        });
+        if (blockedShortcut) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
     });
 })();
