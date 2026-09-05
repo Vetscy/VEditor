@@ -165,8 +165,6 @@ function buscarPaisComAPI() {
 }
 
 function converterPrecos(countryCode) {
-    const precoBase = 150; // R$ 150,00 no Brasil
-    
     // Normalizar código de país (remover espaços, maiúsculas)
     const paisNormalizado = (countryCode || 'BR').trim().toUpperCase();
     
@@ -181,15 +179,29 @@ function converterPrecos(countryCode) {
     };
     
     const conversao = conversoes[paisNormalizado] || conversoes['BR'];
-    const precoConvertido = precoBase * conversao.taxa;
     
-    console.log(`✅ País detectado: ${paisNormalizado} | Moeda: ${conversao.simbolo} | Preço: ${conversao.formato(precoConvertido)}`);
-    
-    // Atualizar todos os preços no portfólio
+    // Cada card pode ter um preço diferente; preserve o valor original em BRL.
     const elementos = document.querySelectorAll('.portfolio-price');
     console.log(`Atualizando ${elementos.length} preços...`);
     
     elementos.forEach(elemento => {
+        if (!elemento.dataset.basePrice) {
+            const valorTexto = elemento.textContent
+                .replace(/[^\d,.-]/g, '')
+                .replace(/\.(?=\d{3}(?:,|$))/g, '')
+                .replace(',', '.');
+            const valor = Number.parseFloat(valorTexto);
+
+            if (!Number.isFinite(valor)) {
+                console.warn('Preço inválido encontrado:', elemento.textContent);
+                return;
+            }
+
+            elemento.dataset.basePrice = String(valor);
+        }
+
+        const precoBase = Number.parseFloat(elemento.dataset.basePrice);
+        const precoConvertido = precoBase * conversao.taxa;
         elemento.textContent = conversao.formato(precoConvertido);
         console.log(`Atualizado: ${elemento.textContent}`);
     });
