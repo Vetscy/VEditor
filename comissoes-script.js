@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    configurarMarcadoresDeNovidade();
+
     // Detecção de país e conversão de moedas
     detectarPaisEConverteMoedas();
 
@@ -30,6 +32,115 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
 });
+
+const NOVOS_TRABALHOS_STORAGE_KEY = 'veditor-novos-trabalhos-v1';
+const NOVO_TRABALHO_DURACAO_MS = 24 * 60 * 60 * 1000;
+
+function configurarMarcadoresDeNovidade() {
+    const trabalhos = Array.from(document.querySelectorAll('.portfolio-item'));
+    if (trabalhos.length === 0) return;
+
+    const estado = lerEstadoDosTrabalhos();
+    const idsAtuais = new Set(trabalhos.map(obterIdDoTrabalho));
+    const primeiroAcesso = Object.keys(estado).length === 0;
+    const agora = Date.now();
+
+    trabalhos.forEach(trabalho => {
+        const id = obterIdDoTrabalho(trabalho);
+        const dataInformada = Date.parse(trabalho.dataset.addedAt || '');
+
+        if (Number.isFinite(dataInformada)) {
+            estado[id] = dataInformada;
+        } else if (!(id in estado) && !primeiroAcesso) {
+            estado[id] = agora;
+        }
+
+        atualizarMarcadorDeNovidade(trabalho, estado[id], agora);
+    });
+
+    Object.keys(estado).forEach(id => {
+        if (!idsAtuais.has(id) || agora - estado[id] >= NOVO_TRABALHO_DURACAO_MS) {
+            delete estado[id];
+        }
+    });
+
+    salvarEstadoDosTrabalhos(estado);
+    window.setInterval(() => atualizarMarcadoresAtivos(estado), 60 * 1000);
+}
+
+function obterIdDoTrabalho(trabalho) {
+    if (trabalho.dataset.workId) return trabalho.dataset.workId;
+
+    const imagem = trabalho.querySelector('.portfolio-image')?.getAttribute('src') || '';
+    const titulo = trabalho.querySelector('h3')?.textContent.trim() || '';
+    return `${imagem}|${titulo}`;
+}
+
+function atualizarMarcadoresAtivos(estado) {
+    const agora = Date.now();
+
+    document.querySelectorAll('.portfolio-item').forEach(trabalho => {
+        atualizarMarcadorDeNovidade(trabalho, estado[obterIdDoTrabalho(trabalho)], agora);
+    });
+
+    Object.keys(estado).forEach(id => {
+        if (agora - estado[id] >= NOVO_TRABALHO_DURACAO_MS) {
+            delete estado[id];
+        }
+    });
+
+    salvarEstadoDosTrabalhos(estado);
+}
+
+function atualizarMarcadorDeNovidade(trabalho, adicionadoEm, agora) {
+    const marcadorAtual = trabalho.querySelector('.novo-trabalho-badge');
+    const dentroDoPrazo = Number.isFinite(adicionadoEm)
+        && agora - adicionadoEm >= 0
+        && agora - adicionadoEm < NOVO_TRABALHO_DURACAO_MS;
+
+    if (!dentroDoPrazo) {
+        marcadorAtual?.remove();
+        return;
+    }
+
+    const tempoRestante = formatarTempoRestante(adicionadoEm + NOVO_TRABALHO_DURACAO_MS - agora);
+    const marcador = marcadorAtual || document.createElement('span');
+    marcador.className = 'novo-trabalho-badge';
+    marcador.textContent = 'NOVO';
+    marcador.dataset.timeLeft = `Fica por mais ${tempoRestante}`;
+    marcador.setAttribute('aria-label', `Novo trabalho. Fica por mais ${tempoRestante}`);
+
+    if (!marcadorAtual) {
+        trabalho.appendChild(marcador);
+    }
+}
+
+function formatarTempoRestante(milissegundos) {
+    const horas = Math.ceil(milissegundos / (60 * 60 * 1000));
+    if (horas >= 24) return '1 dia';
+    if (horas === 1) return '1 hora';
+    return `${horas} horas`;
+}
+
+function lerEstadoDosTrabalhos() {
+    try {
+        const estadoSalvo = JSON.parse(localStorage.getItem(NOVOS_TRABALHOS_STORAGE_KEY) || '{}');
+        return estadoSalvo && typeof estadoSalvo === 'object' && !Array.isArray(estadoSalvo)
+            ? estadoSalvo
+            : {};
+    } catch (error) {
+        console.warn('Não foi possível ler o estado dos novos trabalhos:', error);
+        return {};
+    }
+}
+
+function salvarEstadoDosTrabalhos(estado) {
+    try {
+        localStorage.setItem(NOVOS_TRABALHOS_STORAGE_KEY, JSON.stringify(estado));
+    } catch (error) {
+        console.warn('Não foi possível salvar o estado dos novos trabalhos:', error);
+    }
+}
 
 function detectarPaisEConverteMoedas() {
     // Usar apenas APIs de IP, sem pedir permissão de localização

@@ -329,6 +329,54 @@ img {
     position: relative;
 }
 
+.novo-trabalho-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #ff4d6d, #c9184a);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    box-shadow: 0 6px 18px rgba(201, 24, 74, 0.45);
+    cursor: help;
+}
+
+.novo-trabalho-badge::after {
+    content: attr(data-time-left);
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: max-content;
+    max-width: 190px;
+    padding: 7px 10px;
+    border-radius: 7px;
+    background: rgba(10, 0, 20, 0.95);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: normal;
+    text-transform: none;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-4px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.novo-trabalho-badge:hover::after,
+.novo-trabalho-badge:focus-visible::after {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .portfolio-item:hover {
     border-color: rgba(199, 125, 255, 0.5);
     transform: translateY(-15px);
